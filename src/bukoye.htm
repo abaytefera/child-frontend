@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            font-size: 16px;
+        }
+        body{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            gap: 100px;
+            
+        }
+        header{
+display: flex;
+justify-content: space-between;
+padding: 0 20rem;
+align-items: center;
+        }
+        .nav  ul{
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+        .nav  ul a{
+            text-decoration: none;
+            color: blue;
+        }
+        .login{
+            padding: 10px 20px;
+            color: white;
+            background-color: blue;
+            border-radius: 10px;
+        }
+        section{
+            display: grid;
+            grid-template-columns: 1fr 200px;
+        }
+main{
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+}
+main h1{
+    align-self: center;
+}
+
+
+footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.menu{
+display: none;
+}
+.buttonCnt{
+    display: flex;
+    gap: 10px;
+}
+
+/* mobile*/
+@media screen and   (max-width:767px) {
+nav{
+    display: none;
+}
+.menu{
+    display: block;
+    font-size: 30px;
+    font-weight: bold;
+
+}
+header{
+    padding: 0 5px;
+}
+section{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+footer{
+    flex-direction: column;
+    
+}
+
+    
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="logo">Logo</h1>
+         <nav class="nav"> 
+              <ul>
+                   <li><a href="">Home</a></li>
+                   <li><a href="">About</a></li>
+                   <li><a href="">Contact</a></li>
+                   <li><a href="">work</a></li>
+             </ul>
+    
+           </nav>
+
+
+            <div class="buttonCnt">
+              
+                   <button class="login">login
+  
+                    </button>
+                   <button class="menu">=</button> 
+             </div>
+
+  </header> 
+  <section>
+       <main>
+             <h1>welcome</h1>
+              <p style="width:200px">selamselamselamselamselamselamselamselams 
+                 elamselamselamselamselamselamselamselam
+                 lamselamlamselamlamselamlamselamlamselam
+                lamselamlamselamlamselamlamselamlamselam
+            
+              </p>
+
+
+      </main> 
+        <aside>
+
+           <h1> it is side</h1>
+        </aside>
+ </section> 
+   <footer>
+         <div>
+             <h4>Conatct</h1>
+         </div>
+
+         <div>
+              <h4>List</h1>
+         </div>
+
+         <div>
+             <h4>Phone</h1>
+         </div>
+  </footer>
+
+
+
+</body>
+</html>
