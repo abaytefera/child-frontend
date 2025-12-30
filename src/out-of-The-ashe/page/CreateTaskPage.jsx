@@ -1,7 +1,7 @@
 import React from 'react'
 import DashbordNav from '../Component/AuthenticateComponent/DashbordNav'
 import FooterComponent from '../Component/FooterComponent'
-import CreateTask from '../Component/AuthenticateComponent/createTask'
+import CreateTask from '../Component/AuthenticateComponent/CreateTask'
 const CreateTaskPage = () => {
   
   return (

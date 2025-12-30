@@ -37,6 +37,7 @@ let ChildData=[
             textChild:"Boys",
             NumChild:childData?childData[0].male:0
 
+            
           },
           {
             image:"https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/undraw_cool-girl-avatar_fifz.svg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL3VuZHJhd19jb29sLWdpcmwtYXZhdGFyX2ZpZnouc3ZnIiwiaWF0IjoxNzY3MDE4MjEwLCJleHAiOjE3OTg1NTQyMTB9.VGou4UAtimcaB4QrJZc1G-HJgl-9tPY1RUvoCqgfAc8",
