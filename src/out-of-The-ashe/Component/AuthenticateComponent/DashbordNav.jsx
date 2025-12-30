@@ -122,7 +122,7 @@ setcountUnreadMessage(unreadMessage)
   const NavListControl=(type)=>{
         
             if(type=="add"){
-
+          
                SetIsDisplay((pre)=>!pre)
              }
             if(type=="setting"){
@@ -280,7 +280,7 @@ console.log("wagawan")
         SetIsDisplay((pre)=>!pre);
            }}   alt="" />
           
-          <div className={` ${isDisplayADd?"absolute -left-20 rounded-md top-12 px-3 py-5 w-68 bg-white flex flex-col gap-2":"hidden"}`}>
+          <div className={` ${isDisplayADd ? "absolute -left-20 rounded-md top-12 px-3 py-5 w-68 bg-white flex flex-col gap-2":"hidden"}`}>
            {
             ListAdd.map((ListAdd)=>(
 
@@ -288,7 +288,7 @@ console.log("wagawan")
            
             <div key={ListAdd.type} onClick={()=>{
               AddListControl(ListAdd.type)
-            }} className={ `${User?.role!=='Admin'? ListAdd.type=="employee" || ListAdd.type=="child"?"hidden":"flex"  :"flex"   }  px-1 py-3 gap-2 cursor-pointer hover:bg-[#D6E2ED] rounded-lg items-center`}>
+            }} className={ `${User?.role!=='Admin'? ListAdd.type=="employee" ?"hidden":"flex"  :"flex"   }  px-1 py-3 gap-2 cursor-pointer hover:bg-[#D6E2ED] rounded-lg items-center`}>
                 <img src={ListAdd.image} className='w-8 h-8' alt="" />
                 <p>{ListAdd.Text}</p>
 
