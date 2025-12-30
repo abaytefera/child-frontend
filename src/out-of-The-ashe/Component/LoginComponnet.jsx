@@ -124,7 +124,7 @@ if(error){
             welcome
          </h1>
          <div className={`${showFeedBack  ?`w-full text-white pt-1 h-10 border-1 text-center rounded-md ${showError ?"bg-red-400":"bg-green-200 flex relative"}`:'hidden'}`} > <div className={`bg-green-400 rounded-md ${showError ?"hidden":"block"} w-full transtion-all duration-1000  z-10 top-0 loginAni absolute left-0 h-full `}></div>  {feedBackText}</div>
-         <div className={` ${false ?"w-full font-bold text-blue-900 flex gap-1 bg-blue-300 justify-center  pt-1 h-10  text-center rounded-md":"hidden"} `}>
+         <div className={` ${isloading ?"w-full font-bold text-blue-900 flex gap-1 bg-blue-300 justify-center  pt-1 h-10  text-center rounded-md":"hidden"} `}>
             <div className='rounded-full w-7 h-7 animate-spin border-t-transparent border-4 border-blue-900'></div>
             loading...
          </div>
