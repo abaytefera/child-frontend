@@ -660,20 +660,24 @@ await createChildOtherFile(Data).unwrap()
   
 
 }
-const descriptionTextRef=useRef([]);
+const descriptionTextRef = useRef([]);
 
-    const adjustTextAreaHeight = useCallback(() => {
-        descriptionTextRef.current.forEach((ref) => {
-            if (ref) {
-                ref.style.height = "auto"; // Reset height to calculate scrollHeight
-                ref.style.height =`${ref.scrollHeight}px`; // Set height to scrollHeight
-            }
-        });
-    }, []);
 
-    useEffect(() => {
-        adjustTextAreaHeight();
-    }, [childInfo?.otherChildData, adjustTextAreaHeight])
+ const adjustTextAreaHeight = useCallback(() => {
+  if (!descriptionTextRef.current) return;
+
+  descriptionTextRef.current.forEach((el) => {
+    if (el instanceof HTMLTextAreaElement) {
+      el.style.height = "auto";
+      el.style.height = `${el.scrollHeight}px`;
+    }
+  });
+}, []);
+
+useEffect(() => {
+  adjustTextAreaHeight();
+}, [childInfo?.otherChildData, adjustTextAreaHeight]);
+
 
   const abu=[{title:"abay",description:"selam"}]
 
@@ -1156,16 +1160,12 @@ else {
   
 </div>
 
-<div>
-  <Textarea
-                    key={indeo} // Make sure index is unique
-                    label={`Description ${indeo + 1}`} // Improved label for accessibility
-                    value={data.description || ""}
-                    ref={(el) => (descriptionTextRef.current[indeo] = el)}
-                    onInput={adjustTextAreaHeight} // Adjust height on input
-                     // Add styling
-                />
-          </div>
+<textarea
+  value={data.description || ""}
+  ref={(el) => (descriptionTextRef.current[indeo] = el)}
+  onInput={adjustTextAreaHeight}
+  className="resize-none overflow-hidden"
+/>
 </div>
 
 
