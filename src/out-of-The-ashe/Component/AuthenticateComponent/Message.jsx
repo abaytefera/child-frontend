@@ -33,6 +33,7 @@ const Message = () => {
  const {id}=useSelector((state)=>state.auth);
  const [messageCollection,setMessageCollection]=useState([]);
  const [coversionCollection,setConversionCollection]=useState([])
+ const [trueConversionCollection,setTrueConversionCollection]=useState([]);
  const container=useRef(null);
 
 const Dispatch=useDispatch()
@@ -54,10 +55,26 @@ setMessageCollection(MessageData);
 useEffect(()=>{
 if(!ConversionData) return
 setConversionCollection(ConversionData);
-
+setTrueConversionCollection(ConversionData)
 
 },[ConversionData])
-
+    useEffect(() => {
+        // Check if ActiveChatId exists
+        if (ActiveChatId) {
+           
+            if (messageText !== '') {
+                
+                if (sendbt.current) {
+                    sendbt.current.disabled = false;
+                }
+            } else {
+               
+                if (sendbt.current) {
+                    sendbt.current.disabled = true;
+                }
+            }
+        }
+    }, [messageText, ActiveChatId]);
 
 const lastMessageRef=useRef(null)
 
@@ -201,8 +218,26 @@ useEffect(()=>{
 
 },[ActiveChatId,messageCollection])
 
+const handleSearch = (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
 
-if(isloading) return <div className="flex flex-col  h-screen items-center justify-center "><div className="h-10 w-10 border-4  border-sky-500 rounded-full border-t-transparent animate-spin"></div></div>
+    const value = e.target.value; // Get the value from the input field
+
+    if (value === "") {
+        // If the search value is empty, reset to the original data
+        setConversionCollection(ConversionData);
+    } else {
+        // Filter the conversionCollection based on the search input
+ setConversionCollection(trueConversionCollection.filter((item) =>{ 
+                 const fullName = `${item?.otherUserData?.firstName || ''} ${item?.otherUserData?.lastName || ''}`.trim().toLowerCase();
+                return fullName.includes(value.toLowerCase());
+   }
+        ))
+      
+    }
+};
+
+if(conversionIsLoading) return <div className="flex flex-col  h-screen items-center justify-center "><div className="h-10 w-10 border-4  border-sky-500 rounded-full border-t-transparent animate-spin"></div></div>
   return (
     <div
       className={` flex w-full pt-5  h-screen overflow-auto  md:px-10 ${!isWide ?"pb-40":"pb-30"}`}
@@ -222,6 +257,7 @@ if(isloading) return <div className="flex flex-col  h-screen items-center justif
             type="search"
             className={`bg-transparent flex-1 outline-none `}
             placeholder="Search..."
+            onChange={handleSearch}
           />
         </div>
 
@@ -269,8 +305,8 @@ if(isloading) return <div className="flex flex-col  h-screen items-center justif
       </div>
 
       {/* Chat Panel */}
-      {
-         EmployeeDataIsLoading &&(
+       {
+        ( EmployeeDataIsLoading ||MessageDataIsLoading) &&(
 
  <div className="flex flex-col w-full   h-screen items-center justify-center "><div className="h-10 w-10 border-4  border-sky-500 rounded-full border-t-transparent animate-spin"></div></div>
 

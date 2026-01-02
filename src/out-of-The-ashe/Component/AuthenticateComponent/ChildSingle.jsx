@@ -261,7 +261,7 @@ if(!images || images.length===0) return null
  
     <FontAwesomeIcon
       icon={faCircleArrowRight}
-      className={`text-3xl max-[300px]:text-xl relative  ${showFull ?"sm:-left-30  max-sm:-left-10 xl:-left-55" :"-left-10 max-[300px]:left-0"} ${currentIndex >= images.length - 1 ? "text-gray-400 cursor-not-allowed" : "cursor-pointer text-black"}`}
+      className={`text-3xl max-[300px]:text-xl relative  ${showFull ?"sm:-left-170  max-sm:-left-200 xl:-left-55" :"-left-10 max-[300px]:left-0"} ${currentIndex >= images.length - 1 ? "text-gray-400 cursor-not-allowed" : "cursor-pointer text-black"}`}
       onClick={onNext}
     />
     {showFull && (
@@ -300,7 +300,7 @@ const [fileParent,setFilesParent]=useState(null)
   const ChildTextRef=useRef(null);
   const ParentTextRef=useRef(null);
   const {id}=useParams();
-  const {data:childSingle}=useGetChildByIDQuery(id);
+  const {data:childSingle,isLoading:firstDataLoading}=useGetChildByIDQuery(id);
   const [updateChild,{isLoading:Childupdating}]=useUpdateChildMutation()
   const [createChildOtherFile,{isLoading:isLoadingChildOtherFile
                              ,isSuccess:isSuccessChildOtherFile,
@@ -516,12 +516,13 @@ inputFile.click()
 
   useEffect(()=>{
 
-
-        ChildTextRef.current.style.height='auto';
-     ChildTextRef.current.style.height=`${ ChildTextRef.current.scrollHeight}px`
-     if(ParentTextRef.current){
-      ParentTextRef.current.style.height='auto';
-  ParentTextRef.current.style.height=`${ ChildTextRef.current.scrollHeight}px`
+if( ChildTextRef?.current){
+       ChildTextRef?.current.style.height='auto';
+     ChildTextRef?.current.style.height=`${ ChildTextRef?.current.scrollHeight}px`
+}
+     if(ParentTextRef?.current){
+      ParentTextRef?.current.style.height='auto';
+  ParentTextRef?.current.style.height=`${ ChildTextRef?.current.scrollHeight}px`
      }
 
   },[childInfo?.ChildDescription,childInfo?.ParentDescription]);
@@ -658,23 +659,21 @@ await createChildOtherFile(Data).unwrap()
 
 }
 const descriptionTextRef=useRef([]);
-useEffect(() => {
-  descriptionTextRef.current.forEach((ref) => {
-    if (ref) {
-      ref.style.height = "auto";
-      ref.style.height = `${ref.scrollHeight}px`;
-    }
-  });
-}, [childInfo?.OtherData]);
+    const adjustTextAreaHeight = useCallback(() => {
+        descriptionTextRef.current.forEach((ref) => {
+            if (ref) {
+                ref.style.height = "auto"; // Reset height to calculate scrollHeight
+                ref.style.height =` ${ref.scrollHeight}px`; // Set height to scrollHeight
+            }
+        });
+    }, []);
+
+    useEffect(() => {
+        adjustTextAreaHeight();
+    }, [childInfo?.otherChildData, adjustTextAreaHeight])
 
   const abu=[{title:"abay",description:"selam"}]
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Spinner />
-      </div>
-    );
-  }
+
 
 
 const  SearchDataBySearch=(e)=>{
@@ -757,6 +756,14 @@ await UploadProfile(Data).unwrap
 }
 }
 
+
+  if (firstDataLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Spinner />
+      </div>
+    );
+  }
 
 
   return (
@@ -942,7 +949,7 @@ await UploadProfile(Data).unwrap
             onNext={() =>
               setImageIndex((prev) => ({
                 ...prev,
-                child: Math.min((childInfo?.Parentfile?.length|| 1) - 1, prev.parent + 1),
+                parent: Math.min((childInfo?.Parentfile?.length|| 1) - 1, prev.parent + 1),
               }))
             }
             showFull={showImage.parent}
@@ -1148,13 +1155,13 @@ else {
 
 <div>
   <Textarea
-            label="Description"
-      
-            value={data.description|| ""}
-           key={indeo}
-           
-            ref={(el)=>(descriptionTextRef.current[indeo]=el)}
-          />
+                    key={indeo} // Make sure index is unique
+                    label={`Description ${indeo + 1}`} // Improved label for accessibility
+                    value={data.description || ""}
+                    ref={(el) => (descriptionTextRef.current[indeo] = el)}
+                    onInput={adjustTextAreaHeight} // Adjust height on input
+                     // Add styling
+                />
           </div>
 </div>
 

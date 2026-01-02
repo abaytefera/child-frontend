@@ -4,10 +4,18 @@ import FooterComponent from '../Component/FooterComponent'
 import DashbordBody from '../Component/AuthenticateComponent/DashbordBody'
 import { useSelector,useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useGetUserQuery } from '../Redux/User'
+import { useGetChildsQuery } from '../Redux/Childes'
+import { useGetEmployeesQuery } from '../Redux/Employee'
 
 const DashbordPage = () => {
-  const {isAuthenticate}=useSelector((state)=>state.auth);
+  const {id,isAuthenticate}=useSelector((state)=>state.auth);
   const navigate=useNavigate()
+    const {data:User,isLoading:UserDataLoading}=useGetUserQuery(id);
+  
+  const{data:childData,isLoading:ChildDataLoading}=useGetChildsQuery()
+  
+  const {data:EmployeeData,isLoading:EmployeeDataIsLoading}=useGetEmployeesQuery()
   useEffect(()=>{
 
 
@@ -22,6 +30,16 @@ const DashbordPage = () => {
     window.scrollTo(0,0)
 
   },[])
+  const isloading=UserDataLoading || ChildDataLoading || EmployeeDataIsLoading
+
+if(isloading){
+
+
+      return (
+      <div className="flex items-center justify-center h-screen">
+        <Spinner />
+      </div>
+    );
   return (
     <div className='w-full pt-25 gap-10 flex flex-col bg-[#D6E2ED]  min-h-screen'>
       <DashbordNav></DashbordNav>

@@ -2,7 +2,7 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState, useRef } from "react";
 import { useSelector,useDispatch } from "react-redux";
-import { useGetUserQuery, useUpdateProfileMutation } from "../../Redux/User";
+import { useGetUserQuery, useUpdateUserMutation,useUpdateProfileMutation } from "../../Redux/User";
 import { toast, ToastContainer } from "react-toastify";
 import { APi } from "../../Redux/CenteralAPI";
 
@@ -11,7 +11,7 @@ const Profile = () => {
   const { id } = useSelector((state) => state.auth);
 
   const [UpdateProfile, { isLoading, isSuccess, isError, error }] = useUpdateProfileMutation();
-  
+    const [updateUser,{isLoading:textIsloading,isSuccess:textIsSucess,isError:textIserror,error:textError}]=useUpdateUserMutation()
 
   const [formInfo, setFormInfo] = useState({
     firstName: "",
@@ -23,7 +23,7 @@ const Profile = () => {
   });
 
  
-  const { data: User } = useGetUserQuery(id);
+  const { data: User,isLoading:firstFetchUserData  } = useGetUserQuery(id);
   const Dispatch =useDispatch()
 
   const firstInputRef = useRef(null);
@@ -37,19 +37,35 @@ const Profile = () => {
   }, [User]);
 
 
-  useEffect(() => {
+   useEffect(() => {
     if (isSuccess) {
       toast.success("Successfully updated!")
       Dispatch(APi.util.invalidateTags([{type:'User',_id:'List'}]))
       setIsEditing(false);
     }
   }, [isSuccess]);
+  useEffect(()=>{
+ if(textIsSucess){
+toast.success("Successfully updated!")
+Dispatch(APi.util.invalidateTags([{type:'User',_id:'List'}]))
+return
+ }
+
+  },[textIsSucess])
 
   useEffect(() => {
     if (isError) {
       toast.error(error?.data?.message || "Update failed");
+      return
     }
   }, [isError, error]);
+
+    useEffect(() => {
+    if (textIserror) {
+      toast.error(textError?.data?.message || "Update failed");
+      return
+    }
+  }, [textIserror, textError]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -98,7 +114,9 @@ const Profile = () => {
       toast.error("Image upload failed");
     }
   };
-
+if(firstFetchUserData) return( <div className="flex flex-col  h-screen items-center  mt-40 ">
+  <div className="h-10 w-10 border-4  border-sky-500 rounded-full border-t-transparent animate-spin"></div>
+  </div>)
   return (
     <div className="flex flex-col gap-10 min-h-screen px-10 pb-40 overflow-hidden">
       <ToastContainer />
