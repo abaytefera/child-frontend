@@ -514,18 +514,20 @@ inputFile.click()
 
 
 
-  useEffect(()=>{
+useEffect(() => {
+  if (ChildTextRef?.current) {
+    ChildTextRef.current.style.height = "auto";
+    ChildTextRef.current.style.height =
+      `${ChildTextRef.current.scrollHeight}px`;
+  }
 
-if( ChildTextRef?.current){
-       ChildTextRef?.current.style.height='auto';
-     ChildTextRef?.current.style.height=`${ ChildTextRef?.current.scrollHeight}px`
-}
-     if(ParentTextRef?.current){
-      ParentTextRef?.current.style.height='auto';
-  ParentTextRef?.current.style.height=`${ ChildTextRef?.current.scrollHeight}px`
-     }
+  if (ParentTextRef?.current) {
+    ParentTextRef.current.style.height = "auto";
+    ParentTextRef.current.style.height =
+      `${ParentTextRef.current.scrollHeight}px`;
+  }
+}, [childInfo?.ChildDescription, childInfo?.ParentDescription]);
 
-  },[childInfo?.ChildDescription,childInfo?.ParentDescription]);
 
 
   const handleChange = (e) => {
