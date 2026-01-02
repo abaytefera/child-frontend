@@ -39,7 +39,7 @@ if(isloading){
       <div className="flex items-center justify-center h-screen">
         <Spinner />
       </div>
-    );}
+    )}
   return (
     <div className='w-full pt-25 gap-10 flex flex-col bg-[#D6E2ED]  min-h-screen'>
       <DashbordNav></DashbordNav>
