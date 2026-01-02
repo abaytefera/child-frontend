@@ -58,6 +58,7 @@ setConversionCollection(ConversionData);
 setTrueConversionCollection(ConversionData)
 
 },[ConversionData])
+const sendbt=useRef(null);
     useEffect(() => {
         // Check if ActiveChatId exists
         if (ActiveChatId) {
@@ -409,7 +410,7 @@ if(conversionIsLoading) return <div className="flex flex-col  h-screen items-cen
             }}
             value={messageText}
           />
-          <button  onClick={sendHandler} className="bg-sky-500 hover:bg-sky-600 text-white font-semibold px-5 py-2 rounded">
+          <button  ref={sendbt} onClick={sendHandler} className="bg-sky-500 hover:bg-sky-600 text-white font-semibold px-5 py-2 rounded">
             Send
           </button>
         </div>

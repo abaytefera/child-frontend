@@ -661,11 +661,12 @@ await createChildOtherFile(Data).unwrap()
 
 }
 const descriptionTextRef=useRef([]);
+
     const adjustTextAreaHeight = useCallback(() => {
         descriptionTextRef.current.forEach((ref) => {
             if (ref) {
                 ref.style.height = "auto"; // Reset height to calculate scrollHeight
-                ref.style.height =` ${ref.scrollHeight}px`; // Set height to scrollHeight
+                ref.style.height =`${ref.scrollHeight}px`; // Set height to scrollHeight
             }
         });
     }, []);
