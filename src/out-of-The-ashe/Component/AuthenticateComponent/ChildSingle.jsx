@@ -660,23 +660,11 @@ await createChildOtherFile(Data).unwrap()
   
 
 }
-const descriptionTextRef = useRef([]);
-
-
- const adjustTextAreaHeight = useCallback(() => {
-  if (!descriptionTextRef.current) return;
-
-  descriptionTextRef.current.forEach((el) => {
-    if (el instanceof HTMLTextAreaElement) {
-      el.style.height = "auto";
-      el.style.height = `${el.scrollHeight}px`;
-    }
-  });
-}, []);
-
-useEffect(() => {
-  adjustTextAreaHeight();
-}, [childInfo?.otherChildData, adjustTextAreaHeight]);
+const autoResize = (e) => {
+  const el = e.target;
+  el.style.height = "auto";
+  el.style.height = `${el.scrollHeight}px`;
+};
 
 
   const abu=[{title:"abay",description:"selam"}]
@@ -1162,8 +1150,7 @@ else {
 
 <textarea
   value={data.description || ""}
-  ref={(el) => (descriptionTextRef.current[indeo] = el)}
-  onInput={adjustTextAreaHeight}
+  onInput={autoResize}
   className="resize-none overflow-hidden"
 />
 </div>
