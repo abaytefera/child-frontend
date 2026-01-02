@@ -1149,10 +1149,15 @@ else {
 </div>
 
 <textarea
-  value={data.description || ""}
-  onInput={autoResize}
-  className="resize-none overflow-hidden"
-/>
+    key={indeo}
+    value={data.description || ""}
+    onInput={(e) => {
+      const el = e.target;
+      el.style.height = "auto";
+      el.style.height = `${el.scrollHeight}px`;
+    }}
+    className="resize-none overflow-hidden w-full"
+  />
 </div>
 
 
