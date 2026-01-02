@@ -660,11 +660,19 @@ await createChildOtherFile(Data).unwrap()
   
 
 }
-const autoResize = (e) => {
-  const el = e.target;
-  el.style.height = "auto";
-  el.style.height = `${el.scrollHeight}px`;
-};
+  const descriptionTextRef = useRef([]);
+
+  // Function to adjust the height of a single textarea
+  const adjustTextAreaHeight = (el) => {
+    if (!el) return;
+    el.style.height = "auto"; // reset height
+    el.style.height = `${el.scrollHeight}px`; // set height based on content
+  };
+
+  // Adjust height on initial render or when data changes
+  useLayoutEffect(() => {
+    descriptionTextRef.current.forEach((el) => adjustTextAreaHeight(el));
+  }, [childInfo?.otherChildData]);
 
 
   const abu=[{title:"abay",description:"selam"}]
@@ -1148,16 +1156,14 @@ else {
   
 </div>
 
-<textarea
-    key={indeo}
-    value={data.description || ""}
-    onInput={(e) => {
-      const el = e.target;
-      el.style.height = "auto";
-      el.style.height = `${el.scrollHeight}px`;
-    }}
-    className="resize-none overflow-hidden w-full"
-  />
+<Textarea
+          key={indeo}
+          label={`Description ${indeo + 1}`}
+          value={data.description || ""}
+          ref={(el) => (descriptionTextRef.current[indeo] = el)}
+          onInput={(e) => adjustTextAreaHeight(e.target)} // only current textarea
+          className="resize-none overflow-hidden w-full"
+        />
 </div>
 
 
