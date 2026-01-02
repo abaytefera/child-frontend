@@ -7,7 +7,9 @@ import { useNavigate } from 'react-router-dom'
 import { useGetUserQuery } from '../Redux/User'
 import { useGetChildsQuery } from '../Redux/Childes'
 import { useGetEmployeesQuery } from '../Redux/Employee'
-
+const Spinner = () => (
+  <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+);
 const DashbordPage = () => {
   const {id,isAuthenticate}=useSelector((state)=>state.auth);
   const navigate=useNavigate()
