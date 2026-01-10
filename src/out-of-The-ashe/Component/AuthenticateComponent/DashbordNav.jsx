@@ -40,31 +40,31 @@ setcountUnreadMessage(unreadMessage)
 
   let NavList=[
     {
-        image:"https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/house-regular-full.svg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL2hvdXNlLXJlZ3VsYXItZnVsbC5zdmciLCJpYXQiOjE3NjcwMTc0OTQsImV4cCI6MTc5ODU1MzQ5NH0.f-GhVNwPqThqqMDE_ny9j98eNzh_XLLKvANDUnqTLgw",
+        image:"https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960858/house-regular-full_1_xp07ke.svg",
         Text:"Dashbord",
         resposivehidden:true,
         type:"Dashbord"
     },
       {
-        image:"https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/square-plus-regular-full.svg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL3NxdWFyZS1wbHVzLXJlZ3VsYXItZnVsbC5zdmciLCJpYXQiOjE3NjcwMTgwNTUsImV4cCI6MTc5ODU1NDA1NX0.vnWEJ-HproMgA2c8m5kJBi51VwlthMCl3PFaHxhan44",
+        image:"https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960856/square-plus-regular-full_1_wkimns.svg",
         Text:"Add",
         resposivehidden:true,
         type:"add"
     },
       {
-        image:"https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/address-card-regular-full%20(1).svg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL2FkZHJlc3MtY2FyZC1yZWd1bGFyLWZ1bGwgKDEpLnN2ZyIsImlhdCI6MTc2NzAxODU2MSwiZXhwIjoxNzk4NTU0NTYxfQ.N3jqAH7-lkDk8sKmYQ6htEgdQ49E8ghihnXZDWst0lE",
+        image:"https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960858/address-card-regular-full_1_1_fj3n8o.svg",
         Text:"Profile",
         resposivehidden:false,
         type:"profile"
     },
       {
-        image:"https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/setting-5-svgrepo-com.svg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL3NldHRpbmctNS1zdmdyZXBvLWNvbS5zdmciLCJpYXQiOjE3NjcwMTc5OTQsImV4cCI6MTc5ODU1Mzk5NH0.B_1FP8W_BErz65vYs1MMyN5LubhioAzP5mYgB9t5YUg",
+        image:"https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960856/setting-5-svgrepo-com_1_vp1i4v.svg",
         Text:"Setting",
        resposivehidden:false,
        type:"setting"
     },
     {
-        image:"https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/logout_3889524.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL2xvZ291dF8zODg5NTI0LnBuZyIsImlhdCI6MTc2NzAxODM2MSwiZXhwIjoxNzk4NTU0MzYxfQ.9nXhPVMr-U09Npy6Qmlw3WOMs2Ap1s4tfpIIhvwLv38",
+        image:"https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960857/logout_3889524_1_pgs1je.png",
         Text:"logout",
        resposivehidden:false,
        type:"logout"
@@ -75,13 +75,13 @@ setcountUnreadMessage(unreadMessage)
 
   let ListAdd = [
     {
-        image: "https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/undraw_true-friends_1h3v%20(1).svg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL3VuZHJhd190cnVlLWZyaWVuZHNfMWgzdiAoMSkuc3ZnIiwiaWF0IjoxNzY3MDE5MTEyLCJleHAiOjE3OTg1NTUxMTJ9.kBLVZxPfW3AMkh39ptzopzJ_FD9wPSOcpZbFtDx6oFw",
+        image: "https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960855/undraw_children_e6ln_1_chhsdf.svg",
         Text: "Register New Child",
         type:'child'
     },
 
     {
-        image: "https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/undraw_hr-presentation_uunk.svg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL3VuZHJhd19oci1wcmVzZW50YXRpb25fdXVuay5zdmciLCJpYXQiOjE3NjcwMTkwODEsImV4cCI6MTc5ODU1NTA4MX0.3qMVkdLF1JR2REackzw12APiArIn0KXMu_BRUYMsq8g",
+        image: "https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960854/undraw_hr-presentation_uunk_1_bfujwe.svg",
         Text: "Employee account create",
         type:'employee'
     },
@@ -90,13 +90,13 @@ setcountUnreadMessage(unreadMessage)
 ];
   let ListSetting = [
     {
-        image: "https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/security_13166299.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL3NlY3VyaXR5XzEzMTY2Mjk5LnBuZyIsImlhdCI6MTc2NzAxODQyOCwiZXhwIjoxNzk4NTU0NDI4fQ.Nh9x-B-gNJDL8AQEynj0b0oOniQZIo-c09SzLv9jg6A",
+        image: "https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960856/security_13166299_1_y7mvpy.png",
         Text: "Password Chage",
         type:'passwordChange'
     },
 
     {
-        image: "https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/scanning_7065964.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL3NjYW5uaW5nXzcwNjU5NjQucG5nIiwiaWF0IjoxNzY3MDE4NTE2LCJleHAiOjE3OTg1NTQ1MTZ9.bjsERVuZuSE_ENch-w5iex3OwUR537sMvl_u4YkVfAc",
+        image: "https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960856/scanning_7065964_1_ihqn4u.png",
         Text: "FQA",
         type:'FQA'
     },
@@ -218,13 +218,13 @@ console.log("wagawan")
 
   return (
     <div className='flex  z-100  backdrop-blur-sm w-full fixed top-0 left-0 items-center px-5  bg-white/30 justify-between h-[90px]'>
-      <img src="https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/out.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL291dC5wbmciLCJpYXQiOjE3NjcwMTc3NDUsImV4cCI6MTc5ODU1Mzc0NX0.kiAbVZpu9DvN_7CjBQocDC0vDSv7YCR9lRvY4nnBYnU" alt=""   className='w-[102px] max-smallmobile:hidden h-[42px]'/>
+      <img src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960857/out_1_ligvau.png" alt=""   className='w-[102px] max-smallmobile:hidden h-[42px]'/>
        <nav className='flex items-center  max-[300px]:gap-1  gap-10'>
        
         <div  className='relative '>
               <img onClick={()=>{
           setSearchControl((pre)=>!pre);
-      }} src="https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/magnifying-glass-solid-full.svg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL21hZ25pZnlpbmctZ2xhc3Mtc29saWQtZnVsbC5zdmciLCJpYXQiOjE3NjcwMTc2NDgsImV4cCI6MTc5ODU1MzY0OH0.eFjIwqRH8BEl4Wj8fEH6VFFRY7JdxlJl8kvkUTBOWD0" alt="" className='w-8 cursor-pointer h-8' />
+      }} src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960857/magnifying-glass-solid-full_1_un9ob1.svg" alt="" className='w-8 cursor-pointer h-8' />
             { searchControl &&( <div className='absolute   search:w-100  top-10 md:-left-10'>
               <input type="search" value={searchValue}  onChange={(e)=>{
                  setSearchValue(e.target.value);
@@ -260,13 +260,13 @@ console.log("wagawan")
           <Link className='max-md:hidden cursor-pointer' to={'/DashbordPage'}>
         
             
-             <img src="https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/house-regular-full.svg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL2hvdXNlLXJlZ3VsYXItZnVsbC5zdmciLCJpYXQiOjE3NjcwMTc0OTQsImV4cCI6MTc5ODU1MzQ5NH0.f-GhVNwPqThqqMDE_ny9j98eNzh_XLLKvANDUnqTLgw" className='w-8 h-8'  alt="" />
+             <img src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960858/house-regular-full_1_xp07ke.svg" className='w-8 h-8'  alt="" />
          </Link>
 
          <Link to={"/MessagePage"}   className=' relative cursor-pointer'>
         
            
-            <img src="https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/message-regular-full.svg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL21lc3NhZ2UtcmVndWxhci1mdWxsLnN2ZyIsImlhdCI6MTc2NzAxNzY5MywiZXhwIjoxNzk4NTUzNjkzfQ.hgy6iupgE8vVJb5ljG-vM0Vkg2gmIAT1JZjegSyFp5M" alt="" className='w-8 h-8' />
+            <img src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960857/message-regular-full_1_h1krql.svg" alt="" className='w-8 h-8' />
              <span className="absolute -top-2 -right-1  text-xs font-bold bg-red-600 text-white rounded-full px-1">{countUnreadMessage>0?countUnreadMessage:""}</span>
         </Link>
 
@@ -276,7 +276,7 @@ console.log("wagawan")
        </Link> */}
         <div className='relative max-md:hidden '>
      
-           <img src="https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/square-plus-regular-full.svg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL3NxdWFyZS1wbHVzLXJlZ3VsYXItZnVsbC5zdmciLCJpYXQiOjE3NjcwMTkzNjYsImV4cCI6MTc5ODU1NTM2Nn0.b0u7fk3eY_eP8js5c-pymjGeF6P92HpJ0hWGlj-2VUQ" className='max-md:hidden w-8 h-8 cursor-pointer' onClick={()=>{
+           <img src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960856/square-plus-regular-full_1_wkimns.svg" className='max-md:hidden w-8 h-8 cursor-pointer' onClick={()=>{
         SetIsDisplay((pre)=>!pre);
            }}   alt="" />
           

@@ -27,20 +27,20 @@ const {data:User}=useGetUserQuery(id);
 
 let ChildData=[
            {
-            image:"https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/undraw_children_e6ln.svg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL3VuZHJhd19jaGlsZHJlbl9lNmxuLnN2ZyIsImlhdCI6MTc2NzAxOTQwOSwiZXhwIjoxNzk4NTU1NDA5fQ.X-DtyR4U-RQ7MFxisqBQQA4ptCTQQjaeNowRck_jLzs",
+            image:"https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960855/undraw_children_e6ln_1_chhsdf.svg",
             textChild:"All Child",
             NumChild:childData ?childData[2].totalChild :0
 
           },
             {
-            image:"https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/undraw_young-man-avatar_wgbd.svg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL3VuZHJhd195b3VuZy1tYW4tYXZhdGFyX3dnYmQuc3ZnIiwiaWF0IjoxNzY3MDE4MTE2LCJleHAiOjE3OTg1NTQxMTZ9.l4-rZSDCqmM343RFrxdZnDabKyDQtbiGESqLTSSP_V4",
+            image:"https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960854/undraw_young-man-avatar_wgbd_1_mmwgvi.svg",
             textChild:"Boys",
             NumChild:childData?childData[0].male:0
 
             
           },
           {
-            image:"https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/undraw_cool-girl-avatar_fifz.svg?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL3VuZHJhd19jb29sLWdpcmwtYXZhdGFyX2ZpZnouc3ZnIiwiaWF0IjoxNzY3MDE4MjEwLCJleHAiOjE3OTg1NTQyMTB9.VGou4UAtimcaB4QrJZc1G-HJgl-9tPY1RUvoCqgfAc8",
+            image:"https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960854/undraw_cool-girl-avatar_fifz_1_jv9ulx.svg",
             textChild:"grils",
             NumChild:childData?childData[1].female:0
 

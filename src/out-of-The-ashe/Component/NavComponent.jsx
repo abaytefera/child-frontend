@@ -13,7 +13,7 @@ const NavComponent = () => {
         {/* logo box */}
      <div className='w-[102px] h-[42px]  '>
 
-         <img src="https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/out.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL291dC5wbmciLCJpYXQiOjE3NjcwMTc3NDUsImV4cCI6MTc5ODU1Mzc0NX0.kiAbVZpu9DvN_7CjBQocDC0vDSv7YCR9lRvY4nnBYnU" alt="profile" />
+         <img src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960857/out_1_ligvau.png" alt="profile" />
 
      </div>
 

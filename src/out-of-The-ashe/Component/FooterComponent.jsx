@@ -5,7 +5,7 @@ import { faFacebook,faTwitter,faLinkedin } from '@fortawesome/free-brands-svg-ic
 
 const FooterComponent = () => {
   return (
-   <section className='max-md:flex-col bg-[url(https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/Child.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL0NoaWxkLnBuZyIsImlhdCI6MTc2NzAxNzM3NCwiZXhwIjoxNzk4NTUzMzc0fQ.APfT_5ombWb8oG1MTmzzp8NJJQLHIq6B9mszUJX_QLU)]  backdrop-blur-sm   max-md:items-center  mb-1  bg-brandColor flex justify-between w-full left-0 px-[48px] py-[10px] bottom-0  '> 
+   <section className='max-md:flex-col bg-[url(https://res.cloudinary.com/dkzvlqjp9/image/upload/v1768032260/Child_1_axdjgd.png)]  backdrop-blur-sm   max-md:items-center  mb-1  bg-brandColor flex justify-between w-full left-0 px-[48px] py-[10px] bottom-0  '> 
      <p className='max-w-[269px]   self-center text-center text-white'>
      website Design and Development
      ©All Right Reserved  by Abay Tefera

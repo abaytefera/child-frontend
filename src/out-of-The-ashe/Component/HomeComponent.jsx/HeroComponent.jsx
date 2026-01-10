@@ -15,7 +15,7 @@ const HeroComponent = () => {
     <div className=' flex gap-[100px]     self-center max-md:gap-10   max-md:flex-col-reverse border-black'>
 
               <div className={`${scrollObserver<=200 ? "md:translate-x-0 ":" md:opacity-[0%] md:-translate-x-100"} transition-all easy-out duration-900   lg:max-w-[600px] md:max-w-[390px]  max-md:max-w-[374px] h-[211px]`}>
-                   <img src="https://vhglunlzlgjgdmwsihgc.supabase.co/storage/v1/object/sign/file/Child.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV84MTIzOTYyYS04NzVkLTRjODUtYmUxMC04YmQzMjE1ZjA3N2IiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJmaWxlL0NoaWxkLnBuZyIsImlhdCI6MTc2NzAxNzM3NCwiZXhwIjoxNzk4NTUzMzc0fQ.APfT_5ombWb8oG1MTmzzp8NJJQLHIq6B9mszUJX_QLU" alt="" className=' rounded-[12px] ' />
+                   <img src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1768032260/Child_1_axdjgd.png" alt="" className=' rounded-[12px] ' />
               </div>
               <div className={`${scrollObserver<=200 ? "md:translate-x-0 ":" md:opacity-[0%] md:translate-x-100"} transition-all easy-out duration-900 flex self-center flex-col gap-[9px]`}>
 
