@@ -12,7 +12,7 @@ const HeroComponent = () => {
       }
         },[])
   return (
-    <div className=' flex gap-[100px]     self-center max-md:gap-10   max-md:flex-col-reverse border-black'>
+    <div className=' flex gap-[100px]     self-center max-md:gap-10   max-md:flex-col-reverse '>
 
               <div className={`${scrollObserver<=200 ? "md:translate-x-0 ":" md:opacity-[0%] md:-translate-x-100"} transition-all easy-out duration-900   lg:max-w-[600px] md:max-w-[390px]  max-md:max-w-[374px] h-[211px]`}>
                    <img src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1768032260/Child_1_axdjgd.png" alt="" className=' rounded-[12px] ' />

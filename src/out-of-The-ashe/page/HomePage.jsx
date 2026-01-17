@@ -28,7 +28,7 @@ const HomePage = () => {
       },[])
   
   return (
-    <section className='w-full overflow-x-hidden border-1 relative min-h-screen flex flex-col  bg-[#D6E2ED]     pt-[200px] '>
+    <section className='w-full overflow-x-hidden  relative min-h-screen flex flex-col  bg-[#D6E2ED]     pt-[200px] '>
       <NavComponent></NavComponent>
        <HeroComponent></HeroComponent>
        <div className='flex  pb-30 flex-col gap-[200px]'>
