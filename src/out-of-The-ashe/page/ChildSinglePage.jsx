@@ -24,7 +24,7 @@ const ChildSinglePage = () => {
       },[])
   return (
 
-     <div className='w-full pt-25  relative gap-10 flex flex-col bg-[#D6E2ED]  min-h-screen'>
+     <div className='w-full pt-24 relative gap-10 flex flex-col bg-[#D6E2ED]  min-h-screen'>
       <DashbordNav></DashbordNav>
       
      <ChildSingle></ChildSingle>
