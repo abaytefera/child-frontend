@@ -79,12 +79,10 @@ const DashbordNav = () => {
       
       {/* Branding */}
       <Link to="/DashboardPage" className="flex items-center gap-3 group">
-        <div className="w-11 h-11 bg-gradient-to-tr from-blue-600 to-indigo-500 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-200 group-hover:rotate-6 transition-transform">
-          <span className="text-white font-black text-xl italic">C</span>
-        </div>
+        
         <div className="flex flex-col max-md:hidden">
-          <span className="font-black text-lg leading-none tracking-tight text-slate-900">CENTRAL</span>
-          <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest leading-none mt-1">Workspace</span>
+       <img src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960857/out_1_ligvau.png" 
+             alt="Logo" className="h-10 w-auto object-contain" />
         </div>
       </Link>
 
