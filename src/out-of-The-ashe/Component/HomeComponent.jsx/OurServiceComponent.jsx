@@ -1,61 +1,40 @@
-import React from 'react'
-import { useState ,useEffect} from 'react';
-const OurServiceComponent = () => {
-  const [scrollObserver,setScrollobserver]=useState(0);
-  useEffect(()=>{
+import { faGraduationCap, faUtensils } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+export const OurServiceComponent = () => {
+  const services = [
+    { 
+      title: "Education", 
+      text: "Tech Orphan Private School for better learning and future opportunities.", 
+      icon: faGraduationCap, 
+      img: "https://res.cloudinary.com/dkzvlqjp9/image/upload/v1768031988/school_yiltyp.png" 
+    },
+    { 
+      title: "Food Security", 
+      text: "Providing nutritious meals daily for orphaned and vulnerable children.", 
+      icon: faUtensils, 
+      img: "https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767961085/lunch_ujtozk.png" 
+    }
+  ];
 
-    const onScroll=()=>setScrollobserver(window.scrollY);
-    window.addEventListener('scroll',onScroll);
-return()=>{
-
-  
-}
-  },[])
-  console.log(scrollObserver);
   return (
-    <section className=' flex relative  self-center gap-[60px] flex-col'>
-      
-          <h1 className={`${scrollObserver >=100 ? "md:translate-y-0":" md:opacity-0 md:-translate-y-5"} ${scrollObserver >=200 ? "max-md:translate-y-0":"opacity-0 max-md:-translate-y-5"}     transform-all duration-300 easy-out  istok-web-regular-italic self-center`}>
-              Our Service
-          </h1>
-          <div className='flex  max-md:flex-col gap-[100px] '>
-                <div className='flex flex-col '>
-                   <img src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1768031988/school_yiltyp.png" alt="" className={`md:w-[267px] md:w-[296px]  ${scrollObserver>=200 ? "md:translate-x-0 ":" md:opacity-[0%] md:-translate-x-100"}   ${scrollObserver >=300 ?"max-md:translate-x-0":"max-md:-translate-x-100 max-md:opacity-0"} transform-all duration-900 easy-out max-md:self-center max-md:max-w-full max-md:h-[426px] lg:w-[400px] lg:h-[300px]  rounded-[8px]`} />
-                   <div className={`${scrollObserver>=300 ? "md:translate-y-0":"md:translate-y-20"} transform-all duration-900 easy-out  ${scrollObserver >=600 ? "max-md:translate-y-0":"max-md:translate-y-20"} flex flex-col `}>
-                     <h1 className={` text-[20px] self-center  text-[#3B39CE]`}>
-                      Education
-                     </h1>
-                     <p className='w-[206px] text-center self-center'>
-                      Tech Orphan Private School for
-                       Better Learning
-                     </p>
-                   </div>
-
-
-                </div>
-
-                <div>
-                   <div className='flex flex-col '>
-                      <img src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767961085/lunch_ujtozk.png" alt="" className={`${scrollObserver>=200 ? "md:translate-x-0 ":" md:opacity-[0%] md:translate-x-100"} ${scrollObserver>=800 ? "max-md:translate-x-0 ":" max-md:opacity-[0%] max-md:translate-x-100"} transform-all duration-900 easy-out  max-md:self-center max-md:max-w-full max-md:h-[426px] md:w-[267px] md:w-[296px]  lg:w-[400px] lg:h-[300px]  rounded-[8px]`}/>
-
-                      <div className={` ${scrollObserver >=1200 ? "max-md:translate-y-0":"max-md:translate-y-20"}  ${scrollObserver >=300 ? "md:translate-y-0":"md:translate-y-20"} transform-all duration-900 easy-out  flex flex-col `}>
-                         <h1 className='text-[20px] self-center  text-[#3B39CE]'>
-                         Food
-                         </h1>
-                         <p className='w-[206px] text-center self-center'>
-                         Provide nutritious food 
-                         for orphaned children
-                         </p>
-                      </div>
-
-
-                  </div>
-                </div>
-
-
-         </div>
+    <section className="max-w-7xl mx-auto px-6">
+      <h2 className="text-3xl font-bold text-center mb-16 text-slate-800">Our Impact Services</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {services.map((s, i) => (
+          <div key={i} className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-100">
+            <div className="h-64 overflow-hidden">
+              <img src={s.img} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div className="p-8">
+              <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 mb-4 text-xl">
+                <FontAwesomeIcon icon={s.icon} />
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-[#3B39CE]">{s.title}</h3>
+              <p className="text-slate-600">{s.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </section>
-  )
-}
-
-export default OurServiceComponent
+  );
+};

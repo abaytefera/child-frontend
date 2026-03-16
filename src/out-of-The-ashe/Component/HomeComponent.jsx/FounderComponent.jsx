@@ -1,44 +1,101 @@
-import React from 'react'
-import { useState,useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
+import { Info, Award, Users } from 'lucide-react'; 
 
 const FounderComponent = () => {
-  const [ScrollObserver,setScrollobserver]=useState(0);
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef(null);
 
-  useEffect(()=>{
-    const  onScroll=()=>setScrollobserver(window.scrollY);
-         
-      window.addEventListener('scroll',onScroll);
-   return()=>{
-     window.removeEventListener('scroll',onScroll);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.unobserve(entry.target); // Equivalent to triggerOnce: true
+        }
+      },
+      { threshold: 0.2 }
+    );
 
-   }
-    },[])
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className='flex  flex-col gap-[30px]'>
-
-          <h1 className={`${ScrollObserver >=1400 ?"max-md:translate-y-0":" max-md:opacity-0 max-md:-translate-y-10"}  ${ScrollObserver >=500 ?"md:translate-y-0":" md:opacity-0 md:-translate-y-20"} transform-all duration-900 easy-out  istok-web   self-center`}>
-              About out of the Ashe
+    <section 
+      ref={sectionRef} 
+      className="container mx-auto px-6 py-16 md:py-24 max-w-7xl"
+    >
+      <div className="flex flex-col gap-12">
+        
+        {/* Section Header */}
+        <div className={`text-center transition-all duration-1000 ease-out 
+          ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}>
+          <div className="flex justify-center mb-4">
+             <span className="p-3 bg-blue-100 rounded-full text-[#3B39CE]">
+               <Info size={28} />
+             </span>
+          </div>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+            About <span className="text-[#3B39CE]">Out of the Ashes</span>
           </h1>
-          <div className='flex max-md:flex-col gap-[20px] md:gap-[100px]  self-center'>
-           <img src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960857/out_1_ligvau.png" alt="" className={` ${ScrollObserver >=1550 ?"max-md:scale-100":" max-md:opacity-0 max-md:scale-0"} ${ScrollObserver >=600 ?"md:scale-100":" md:opacity-0 md:scale-0"} transform duration-900 easy-out lg:max-w-[302px] max-w-[200px] h-[88px] self-center lg:h-[132px]`} />
-            
-            <div className={` ${ScrollObserver >=1650 ?"max-md:translate-x-0":" max-md:opacity-0 max-md:translate-x-80"} ${ScrollObserver >=600 ?"md:translate-x-0":" md:opacity-0 md:translate-x-80"} transform duration-900 easy-out  lg:max-w-[407px] max-w-[376px] max-[500px]:px-5 flex flex-col gap-[30px]`}>
-              <h2 className='self-center opacity-70 font-bold text-[20px]'>
-               Out of The Ashe
-              </h2>
-               <p className='text-justify'>
-                Out of the Ashes is an International non-governmental 
-                organization. It is registered under the Ethiopian Charities
-                 and Societies Agency with Reg. no. 4776. The organization was 
-                 established in 2013. It partnered with an Ethiopian NGO until 2020 when they received their international license. It started with the vision of contributing to poverty reduction in Addis Ababa and bringing positive behavioral 
-                and social change through empowering children and families
-               </p>
-            </div>
+          <div className="w-24 h-1.5 bg-[#3B39CE] mx-auto rounded-full"></div>
+        </div>
 
+        {/* Content Grid */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
+          
+          {/* Image Box */}
+          <div className={`relative transition-all duration-1000 delay-300 ease-out
+            ${inView ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+            <div className="absolute -inset-4 bg-[#3B39CE]/10 rounded-3xl blur-2xl"></div>
+            <img 
+              src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960857/out_1_ligvau.png" 
+              alt="Out of the Ashes Logo" 
+              className="relative w-full max-w-[280px] md:max-w-[350px] h-auto object-contain transition-transform hover:scale-105 duration-500"
+            />
           </div>
 
-   </section>
-  )
-}
+          {/* Text Content */}
+          <div className={`flex flex-col gap-6 max-w-2xl transition-all duration-1000 delay-500 ease-out
+            ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'}`}>
+            
+            <div className="flex items-center gap-3">
+              <Award className="text-[#3B39CE]" size={24} />
+              <h2 className="text-2xl font-bold text-slate-800 uppercase tracking-wide">
+                Our Foundation & Legacy
+              </h2>
+            </div>
 
-export default FounderComponent
+            <p className="text-lg text-slate-600 leading-relaxed text-justify md:text-left">
+              Out of the Ashes is an <span className="font-semibold text-slate-900">International non-governmental organization</span>. 
+              Registered under the Ethiopian Charities and Societies Agency (Reg. no. 4776), we have been active since 2013.
+            </p>
+
+            <div className="bg-slate-50 p-6 rounded-2xl border-l-4 border-[#3B39CE] shadow-sm">
+              <p className="text-slate-700 italic leading-relaxed">
+                "Established with a vision to contribute to poverty reduction in Addis Ababa, 
+                we strive to bring positive behavioral and social change through the 
+                empowerhood of children and their families."
+              </p>
+            </div>
+
+            <div className="flex items-center gap-4 pt-4">
+               <div className="flex -space-x-2">
+                 <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white border-2 border-white"><Users size={16}/></div>
+                 <div className="w-10 h-10 rounded-full bg-blue-400 border-2 border-white"></div>
+                 <div className="w-10 h-10 rounded-full bg-blue-300 border-2 border-white"></div>
+               </div>
+               <span className="text-sm font-medium text-slate-500">Empowering 1000+ Families since 2013</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default FounderComponent;

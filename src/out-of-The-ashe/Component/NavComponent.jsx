@@ -1,68 +1,29 @@
-import React, { useState } from 'react'
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import React, { useState } from 'react';
+import { faBars, faTimes, faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link, Links } from 'react-router-dom';
-const NavComponent = () => {
-  const [meanuControl,setMeanuControl]=useState(false);
-  console.log(meanuControl);
+import { Link } from 'react-router-dom';
+
+export const NavComponent = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <section className='w-full   backdrop-blur-md   z-100 fixed top-0 left-0 h-[90px] fixed top-0 bg-white/30  lg:px-[64px] 
-            max-lg:px-[32px]  max-md:px-[16px] 
-               flex  justify-between items-center '>
+    <header className="w-full h-20 fixed top-0 left-0 z-50 bg-white/80 backdrop-blur-lg border-b border-slate-200">
+      <div className="max-w-7xl mx-auto h-full px-6 flex justify-between items-center">
+        <img src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960857/out_1_ligvau.png" 
+             alt="Logo" className="h-10 w-auto object-contain" />
 
-        {/* logo box */}
-     <div className='w-[102px] h-[42px]  '>
+        <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-2xl text-slate-800">
+          <FontAwesomeIcon icon={isOpen ? faTimes : faBars} />
+        </button>
 
-         <img src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960857/out_1_ligvau.png" alt="profile" />
-
-     </div>
-
-{/* nav box */}
-    <button onClick={()=>{
-      console.log("selam");
-setMeanuControl((pre)=>!pre);
-    }} className='md:hidden z-100 cursor-pointer'>
-
-            <FontAwesomeIcon icon={faBars} className='text-black font-bold text-[30px] font-bold'></FontAwesomeIcon>
-
-     </button>
-
-     <nav className={`${meanuControl ?"translate-y-0 ":"-translate-y-20 opacity-0"} transition-all  px-5 py-3 duration-900 easy-out   -z-100 rounded-md  absolute right-0 gap-5 bg-white   top-22 md:hidden text-white flex-col  flex justify-between items-center`}>
-
-         <Link to={'/'} className=' px-5 py-3  rounded-md hover:bg-[#D6E2ED] transtion-color duration-300 easy-out'>
-             <button className='text-[16px] hover:font-bold  max-lg:text-[18px] pxhover:text-[#2E37B0] 
-                               hover:text-[20px text-black font-bold transtion-all duration-300] cursor-pointer'>Home
-              </button>
+        <nav className={`fixed md:relative top-20 md:top-0 left-0 w-full md:w-auto bg-white md:bg-transparent p-6 md:p-0 flex flex-col md:flex-row gap-6 items-center transition-all duration-300 ${isOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 md:translate-y-0 md:opacity-100'}`}>
+          <Link to="/" className="text-slate-600 font-medium hover:text-blue-600 transition-colors">Home</Link>
+          <Link to="/loginpage" className="bg-[#3B39CE] text-white px-6 py-2.5 rounded-full flex items-center gap-2 hover:bg-blue-700 shadow-md hover:shadow-blue-200 transition-all">
+            <FontAwesomeIcon icon={faSignInAlt} />
+            <span>Login</span>
           </Link>
-
-          <Link className='px-5 py-3  ' to={'/loginpage'}
-          className='hover:bg-'><button className='w-[93px] h-[46px] text-[16px] hover:bg-blue-900 
-                               transtion-all duration-300 ease  cursor-pointer 
-                                 rounded-[12px] bg-[#3B39CE]'>Login
-          </button>
-          </Link>
-
-      </nav>
-      
-      <nav className={`  w-[259px] h-[68px]  max-md:hidden text-white  flex justify-between items-center`}>
-
-         <Link to={'/'}>
-             <button className='text-[16px] hover:font-bold  max-lg:text-[18px] pxhover:text-[#2E37B0] 
-                               hover:text-[20px text-black font-bold transtion-all duration-300] cursor-pointer'>Home
-              </button>
-          </Link>
-
-          <Link to={'/loginpage'}><button className='w-[93px] h-[46px] text-[16px] hover:bg-[#2E37B0] 
-                               transtion-all duration-300 ease  cursor-pointer 
-                                 rounded-[12px] bg-[#3B39CE]'>Login
-          </button>
-          </Link>
-
-      </nav>
-
-      
-    </section>
-  )
-}
-
-export default NavComponent
+        </nav>
+      </div>
+    </header>
+  );
+};

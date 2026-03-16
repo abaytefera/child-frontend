@@ -1,261 +1,177 @@
-
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { useRef, useState, useContext, useEffect, useCallback } from "react";
+import { faEye, faEyeSlash, faShieldAlt, faCheckCircle, faCircle } from "@fortawesome/free-solid-svg-icons";
+import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { useUpdatePasswordMutation } from "../../Redux/User";
 import { useSelector } from "react-redux";
 
-
-
 const PasswordChange = () => {
-  const [newPasswordVisible, setNewPasswordVisible] = useState(false);
-  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  const {id}=useSelector((state)=>state.auth);
-  const [oldPasswordVisible, setOldPasswordVisible] = useState(false);
+  const { id } = useSelector((state) => state.auth);
+  const [updatePassword, { isLoading }] = useUpdatePasswordMutation();
 
-  
-  const [updatePassword,{isLoading,isSuccess,isError,error}]= useUpdatePasswordMutation();
+  // Field States
+  const [showPasswords, setShowPasswords] = useState({ old: false, new: false, confirm: false });
+  const [formData, setFormData] = useState({ oldPassword: "", newpassword: "", confirmPassword: "" });
 
+  // Validation State
+  const [validations, setValidations] = useState({
+    length: false,
+    upper: false,
+    lower: false,
+    number: false,
+    special: false,
+  });
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
 
-  // Refs for validation UI
-  const useMax = useRef(null);
-  const useUpper = useRef(null);
-  const useLower = useRef(null);
-  const useSpecial = useRef(null);
-  const useNumber = useRef(null);
-
-  const inputRef = useRef(null);
-  const errorRef = useRef(null);
-  const buttonConfirmRef = useRef(null);
-
-
-
-
-  // Track validation status
-  const [isPasswordValid, setPasswordValid] = useState(false);
-
-  const handleInput = useCallback(() => {
-    let check = true;
-    if (!buttonConfirmRef.current) return;
-
-    // Disable button initially
-    buttonConfirmRef.current.disabled = true;
-    buttonConfirmRef.current.classList.add("cursor-not-allowed", "bg-blue-300");
-    buttonConfirmRef.current.classList.remove("cursor-pointer", "bg-button");
-
-    // Remove red from all
-    [useMax, useUpper, useLower, useSpecial, useNumber].forEach((ref) => {
-      ref.current?.classList.remove("text-red-400");
-    });
-
-    const newPassword = inputRef.current.value;
-
-    if (newPassword.length < 6) {
-      useMax.current?.classList.add("text-red-400");
-      check = false;
-    }
-    if (!/[A-Z]/.test(newPassword)) {
-      useUpper.current?.classList.add("text-red-400");
-      check = false;
-    }
-    if (!/[a-z]/.test(newPassword)) {
-      useLower.current?.classList.add("text-red-400");
-      check = false;
-    }
-    if (!/[!@#$%^&*()_+\-=\[\]{}|\\:;"'<>,.?\/]/.test(newPassword)) {
-      useSpecial.current?.classList.add("text-red-400");
-      check = false;
-    }
-    if (!/[0-9]/.test(newPassword)) {
-      useNumber.current?.classList.add("text-red-400");
-      check = false;
-    }
-
-    if (check) {
-      buttonConfirmRef.current.disabled = false;
-      buttonConfirmRef.current.classList.remove("cursor-not-allowed", "bg-blue-300");
-      buttonConfirmRef.current.classList.add("cursor-pointer", "bg-blue-600");
-    }
-
-    setPasswordValid(check);
-  }, []);
-
-  
-  useEffect(()=>{
-if(isError){
-
-toast.error(error);
-
-}
-
-  },[isError])
-  useEffect(()=>{
-if(isSuccess){
-
-  toast.success('sccfully Change password');
-}
-
-  },[isSuccess])
-
-  const handleChangePassword = async (e) => {
-    e.preventDefault();
-    errorRef.current.textContent = "";
-
-    const formData = new FormData(e.target);
-    const newpassword = formData.get("newpassword");
-    const confirmPassword = formData.get("confirmPassword");
-    const oldPassword = formData.get("oldPassword");
-
-    if (!isPasswordValid) {
-      errorRef.current.textContent = "New password does not meet criteria.";
-      return;
-    }
-
-    if (newpassword !== confirmPassword) {
-      errorRef.current.textContent = "Passwords do not match. Please check.";
-      return;
-    }
-
-    
-
-   
-    try {
-     await updatePassword({oldPassword,newpassword,confirmPassword,id:id}).unwrap();
-
-
-      e.target.reset();
-      setPasswordValid(false);
-    } catch (error) {
-      console.error(error);
-      toast.error("An error occurred, please try again.", { position: "top-right" });
-    } finally {
-    
+    if (name === "newpassword") {
+      setValidations({
+        length: value.length >= 6,
+        upper: /[A-Z]/.test(value),
+        lower: /[a-z]/.test(value),
+        number: /[0-9]/.test(value),
+        special: /[!@#$%^&*()_+\-=\[\]{}|\\:;"'<>,.?\/]/.test(value),
+      });
     }
   };
 
-  return (
-    <div
-      className={`
-      }  overflow-auto  flex gap-4 pt-10  flex-col items-center min-h-screen overflow-hidden pb-40 `}
-    >
-      <ToastContainer></ToastContainer>
-      { isLoading  &&(  <div className="flex absolute z-300 top-0 left-0 bg-black/40 w-full  items-center flex-col  h-full">
-      <div className="w-10 border border-6 h-10 mt-50 fixed border-t-transparent border-white rounded-full animate-spin"></div>
-<p className="mt-60 fixed text-xl font-bold text-white  ">loading...</p>
-    </div>
-    )}
-      <p className={`  text-2xl font-extrabold`}>
-        Change Password
-      </p>
+  const isFormValid = Object.values(validations).every(Boolean) && 
+                     formData.newpassword === formData.confirmPassword && 
+                     formData.oldPassword;
 
-      <form
-        className={`flex flex-col gap-10  p-5 rounded-xl w-full max-w-md`}
-        onSubmit={handleChangePassword}
-        noValidate
-      >
-       
-        {/* Old Password */}
-        <div className="flex flex-col relative gap-3">
-          <label htmlFor="oldPassword" className="self-start font-medium text-md">
-            Old Password
-          </label>
-          <input
-            type={oldPasswordVisible ? "text" : "password"}
-            name="oldPassword"
-            id="oldPassword"
-            placeholder="Old password"
-            className="h-10 w-full border-none rounded-lg outline-button px-3"
-            aria-label="Old Password"
-            autoComplete="current-password"
-          />
-          <FontAwesomeIcon
-            icon={oldPasswordVisible ? faEyeSlash : faEye}
-            className="absolute right-3 top-12 cursor-pointer"
-            onClick={() => setOldPasswordVisible((prev) => !prev)}
-            tabIndex={0}
-            role="button"
-            aria-label={oldPasswordVisible ? "Hide old password" : "Show old password"}
-          />
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!isFormValid) return;
+
+    try {
+      await updatePassword({ ...formData, id }).unwrap();
+      toast.success("Password changed successfully!");
+      setFormData({ oldPassword: "", newpassword: "", confirmPassword: "" });
+    } catch (err) {
+      toast.error(err?.data?.message || "Failed to update password");
+    }
+  };
+
+  const toggleVisibility = (field) => {
+    setShowPasswords(prev => ({ ...prev, [field]: !prev[field] }));
+  };
+
+  return (
+    <div className="bg-white rounded-[2rem] shadow-xl shadow-slate-200/60 p-8 md:p-12 border border-white animate-in fade-in zoom-in-95 duration-500">
+      <ToastContainer />
+
+      {/* Header */}
+      <div className="text-center mb-10">
+        <div className="w-16 h-16 bg-sky-50 text-sky-500 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl">
+          <FontAwesomeIcon icon={faShieldAlt} />
         </div>
+        <h2 className="text-2xl font-black text-slate-800">Security Settings</h2>
+        <p className="text-slate-500 font-medium">Update your password to keep your account secure</p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Old Password */}
+        <div className="space-y-2">
+          <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Current Password</label>
+          <div className="relative">
+            <input
+              type={showPasswords.old ? "text" : "password"}
+              name="oldPassword"
+              value={formData.oldPassword}
+              onChange={handleInputChange}
+              className="w-full h-14 px-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-sky-400 focus:bg-white outline-none transition-all font-bold text-slate-700"
+              placeholder="••••••••"
+            />
+            <button
+              type="button"
+              onClick={() => toggleVisibility('old')}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-sky-500 transition-colors"
+            >
+              <FontAwesomeIcon icon={showPasswords.old ? faEyeSlash : faEye} />
+            </button>
+          </div>
+        </div>
+
+        <div className="h-px bg-slate-100 my-8" />
 
         {/* New Password */}
-        <div className="flex flex-col relative gap-3">
-          <label htmlFor="newpassword" className="self-start font-medium text-md">
-            New Password
-          </label>
-          <input
-            type={newPasswordVisible ? "text" : "password"}
-            id="newpassword"
-            name="newpassword"
-            placeholder="New password"
-            className="h-10 w-full rounded-lg outline-button px-3"
-            ref={inputRef}
-            onChange={handleInput}
-            aria-describedby="passwordHelp"
-            autoComplete="new-password"
-          />
-          <FontAwesomeIcon
-            icon={newPasswordVisible ? faEyeSlash : faEye}
-            className="absolute right-3 top-12 cursor-pointer"
-            onClick={() => setNewPasswordVisible((prev) => !prev)}
-            tabIndex={0}
-            role="button"
-            aria-label={newPasswordVisible ? "Hide new password" : "Show new password"}
-          />
-          <ul
-            className="list-disc self-start text-sm ml-5 mt-1"
-            id="passwordHelp"
-            aria-live="polite"
-          >
-            <li ref={useMax}>Minimum 6 characters</li>
-            <li ref={useUpper}>One uppercase character</li>
-            <li ref={useLower}>One lowercase character</li>
-            <li ref={useSpecial}>One special character</li>
-            <li ref={useNumber}>One number</li>
-          </ul>
+        <div className="space-y-2">
+          <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">New Password</label>
+          <div className="relative">
+            <input
+              type={showPasswords.new ? "text" : "password"}
+              name="newpassword"
+              value={formData.newpassword}
+              onChange={handleInputChange}
+              className="w-full h-14 px-5 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-sky-400 focus:bg-white outline-none transition-all font-bold text-slate-700"
+              placeholder="Minimum 6 characters"
+            />
+            <button
+              type="button"
+              onClick={() => toggleVisibility('new')}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-sky-500 transition-colors"
+            >
+              <FontAwesomeIcon icon={showPasswords.new ? faEyeSlash : faEye} />
+            </button>
+          </div>
+          
+          {/* Validation Checklist */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4 p-4 bg-slate-50 rounded-2xl">
+            <ValidationItem isMet={validations.length} label="6+ Characters" />
+            <ValidationItem isMet={validations.upper} label="Uppercase Letter" />
+            <ValidationItem isMet={validations.lower} label="Lowercase Letter" />
+            <ValidationItem isMet={validations.number} label="A Number" />
+            <ValidationItem isMet={validations.special} label="Special Character" />
+          </div>
         </div>
 
-        {/* Confirm New Password */}
-        <div className="flex flex-col relative gap-3">
-          <label htmlFor="confirmPassword" className="self-start font-medium text-md">
-            Confirm New Password
-          </label>
-          <input
-            type={confirmPasswordVisible ? "text" : "password"}
-            name="confirmPassword"
-            id="confirmPassword"
-            placeholder="Confirm new password"
-            className="h-10 w-full border-none rounded-lg outline-button px-3"
-            aria-label="Confirm new password"
-            autoComplete="new-password"
-          />
-          <FontAwesomeIcon
-            icon={confirmPasswordVisible ? faEyeSlash : faEye}
-            className="absolute right-3 top-12 cursor-pointer"
-            onClick={() => setConfirmPasswordVisible((prev) => !prev)}
-            tabIndex={0}
-            role="button"
-            aria-label={confirmPasswordVisible ? "Hide confirm password" : "Show confirm password"}
-          />
+        {/* Confirm Password */}
+        <div className="space-y-2">
+          <label className="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Confirm New Password</label>
+          <div className="relative">
+            <input
+              type={showPasswords.confirm ? "text" : "password"}
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleInputChange}
+              className={`w-full h-14 px-5 rounded-2xl border-2 outline-none transition-all font-bold ${
+                formData.confirmPassword && formData.newpassword !== formData.confirmPassword
+                ? "border-red-200 bg-red-50 text-red-900"
+                : "border-transparent bg-slate-50 focus:border-sky-400 focus:bg-white text-slate-700"
+              }`}
+              placeholder="Repeat new password"
+            />
+          </div>
+          {formData.confirmPassword && formData.newpassword !== formData.confirmPassword && (
+            <p className="text-xs font-bold text-red-500 ml-1">Passwords do not match</p>
+          )}
         </div>
 
-        <p ref={errorRef} className="text-red-600 min-h-[1.25rem]"></p>
-
+        {/* Submit Button */}
         <button
-          className="w-full h-12 bg-blue-300 rounded-2xl cursor-not-allowed text-black disabled:opacity-60"
-          ref={buttonConfirmRef}
           type="submit"
-          disabled
-          aria-disabled="true"
+          disabled={!isFormValid || isLoading}
+          className="w-full h-14 bg-sky-500 text-white rounded-[1.25rem] font-black text-lg shadow-lg shadow-sky-100 hover:bg-sky-600 hover:shadow-sky-200 disabled:bg-slate-200 disabled:shadow-none transition-all active:scale-[0.98] flex items-center justify-center gap-3 mt-8"
         >
-          Change Password
+          {isLoading ? (
+            <div className="w-6 h-6 border-3 border-white/30 border-t-white rounded-full animate-spin" />
+          ) : (
+            "Update Password"
+          )}
         </button>
       </form>
     </div>
   );
 };
+
+// Helper Component for Validation Items
+const ValidationItem = ({ isMet, label }) => (
+  <div className={`flex items-center gap-2 transition-colors ${isMet ? 'text-green-600' : 'text-slate-400'}`}>
+    <FontAwesomeIcon icon={isMet ? faCheckCircle : faCircle} className={isMet ? "text-green-500" : "text-slate-300"} />
+    <span className="text-[11px] font-black uppercase tracking-wider">{label}</span>
+  </div>
+);
 
 export default PasswordChange;

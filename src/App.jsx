@@ -45,7 +45,7 @@ return()=>{
 
 <Route path='/' Component={HomePage}></Route>
 <Route path='/loginpage' Component={LoginPage}></Route>
-<Route path='/DashbordPage' Component={DashbordPage}></Route>
+<Route path='/DashboardPage' Component={DashbordPage} />
 <Route path='/Createtask' Component={CreateTaskPage}></Route>
 <Route path='/EmployeerRgister' Component={EmployeeRegisterPage}></Route>
 <Route path='/ChildRegister' Component={ChildRegisterPage}></Route>

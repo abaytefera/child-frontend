@@ -1,32 +1,30 @@
-import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMailBulk } from '@fortawesome/free-solid-svg-icons'
-import { faFacebook,faTwitter,faLinkedin } from '@fortawesome/free-brands-svg-icons'
-
-const FooterComponent = () => {
+import { faFacebook, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faMailBulk } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+export const FooterComponent = () => {
   return (
-   <section className='max-md:flex-col bg-[url(https://res.cloudinary.com/dkzvlqjp9/image/upload/v1768032260/Child_1_axdjgd.png)]  backdrop-blur-sm   max-md:items-center  mb-1  bg-brandColor flex justify-between w-full left-0 px-[48px] py-[10px] bottom-0  '> 
-     <p className='max-w-[269px]   self-center text-center text-white'>
-     website Design and Development
-     ©All Right Reserved  by Abay Tefera
-     </p>
-      <div className='flex flex-col gap-2 '>
-      <h3 className='self-center text-white text-[20px]   '>Contact</h3>
-      <div className='grid grid-cols-2 gap-5'>
-        <FontAwesomeIcon className='text-[24px] text-[#2E37B0]' icon={faFacebook}></FontAwesomeIcon>
-        <FontAwesomeIcon className='text-[24px] text-[#2E37B0]' icon={faTwitter}></FontAwesomeIcon>
-        <FontAwesomeIcon className='text-[24px] text-red-600' icon={faLinkedin}></FontAwesomeIcon>
-            <FontAwesomeIcon className='text-[24px] ' icon={faMailBulk}></FontAwesomeIcon>
-      </div>
-      </div>
-       <p className='max-w-[269px] text-white self-center  text-center '>
-      website  content  ©All Right Reserved 
-      by ️out of The Ashe
-       </p>
+    <footer className="bg-slate-900 text-slate-300 pt-16 pb-8 px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 border-b border-slate-800 pb-12">
+        <div className="space-y-4">
+          <h4 className="text-white text-lg font-bold">Out of The Ashes</h4>
+          <p className="text-sm leading-relaxed">Reducing the suffering of orphans and vulnerable children in Ethiopia through sustainable community growth.</p>
+        </div>
+        
+        <div className="flex flex-col items-center">
+          <h4 className="text-white text-lg font-bold mb-6">Connect With Us</h4>
+          <div className="flex gap-6 text-2xl">
+            <FontAwesomeIcon icon={faFacebook} className="hover:text-blue-500 cursor-pointer transition-colors" />
+            <FontAwesomeIcon icon={faTwitter} className="hover:text-cyan-400 cursor-pointer transition-colors" />
+            <FontAwesomeIcon icon={faLinkedin} className="hover:text-blue-700 cursor-pointer transition-colors" />
+            <FontAwesomeIcon icon={faMailBulk} className="hover:text-red-400 cursor-pointer transition-colors" />
+          </div>
+        </div>
 
-   </section>
-       
-  )
-}
-
-export default FooterComponent
+        <div className="text-right">
+          <p className="text-sm">© {new Date().getFullYear()} All Rights Reserved</p>
+          <p className="text-sm text-slate-500 italic">Designed by Abay Tefera</p>
+        </div>
+      </div>
+    </footer>
+  );
+};

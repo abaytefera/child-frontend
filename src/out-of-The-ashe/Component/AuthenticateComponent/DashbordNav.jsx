@@ -1,415 +1,227 @@
-import React, { useEffect } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAddressCard, faChevronDown } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
-import { useDispatch,useSelector} from 'react-redux'
-import { logout } from '../../Redux/auth'
-import { useGetUserQuery } from '../../Redux/User'
-import { useGetChildbyNameQuery } from '../../Redux/Childes'
-import { socket } from './SocketIoConfig'
-import { useGetUnreadMessageQuery } from '../../Redux/message'
-import { APi } from '../../Redux/CenteralAPI'
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faChevronDown, 
+  faSearch, 
+  faPlus, 
+  faSignOutAlt, 
+  faUserCircle, 
+  faGear,
+  faCirclePlus,
+  faMessage,
+  faHouse,
+  faTimes
+} from '@fortawesome/free-solid-svg-icons';
 
+// Redux & Config
+import { logout } from '../../Redux/auth';
+import { useGetUserQuery } from '../../Redux/User';
+import { useGetChildbyNameQuery } from '../../Redux/Childes';
+import { useGetUnreadMessageQuery } from '../../Redux/message';
+import { APi } from '../../Redux/CenteralAPI';
+import { socket } from './SocketIoConfig';
 
+const DashbordNav = () => {
+  // --- States ---
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showAddMenu, setShowAddMenu] = useState(false);
+  const [showSettingMenu, setShowSettingMenu] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
 
-const DashbordNav= () => {
-
-  const [isDisplayADd,SetIsDisplay]=useState(false)
-  const [isDisplayNavList,setIsDisplayNavList]=useState(false)
-  const [searchControl,setSearchControl]=useState(false);
-  const [searchValue,setSearchValue]=useState('');
-  const {data:childResult}=useGetChildbyNameQuery(searchValue);
-  const [isDisplaySettingControl,setIsDisplaySettingControl]=useState(false);
-
-  const Dispatch=useDispatch();
-  const {id}=useSelector((state)=>state.auth);
-   const {data:User}=useGetUserQuery(id)
-   const [countUnreadMessage,setcountUnreadMessage]=useState(0);
-   const {data:unreadMessage}=useGetUnreadMessageQuery(id)
-  const {ActiveChatId}=useSelector((state)=>state.webState);
-
-
-  const navigate=useNavigate();
-  useEffect(()=>{
-setcountUnreadMessage(unreadMessage)
-
-  },[unreadMessage])
+  // --- Redux & Navigation ---
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { id } = useSelector((state) => state.auth);
+  const { ActiveChatId } = useSelector((state) => state.webState);
   
+  // --- API Queries ---
+  const { data: user } = useGetUserQuery(id);
+  const { data: childResults, isFetching: isSearching } = useGetChildbyNameQuery(searchValue, {
+    skip: searchValue.length < 2
+  });
+  const { data: unreadData } = useGetUnreadMessageQuery(id);
 
-  let NavList=[
-    {
-        image:"https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960858/house-regular-full_1_xp07ke.svg",
-        Text:"Dashbord",
-        resposivehidden:true,
-        type:"Dashbord"
-    },
-      {
-        image:"https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960856/square-plus-regular-full_1_wkimns.svg",
-        Text:"Add",
-        resposivehidden:true,
-        type:"add"
-    },
-      {
-        image:"https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960858/address-card-regular-full_1_1_fj3n8o.svg",
-        Text:"Profile",
-        resposivehidden:false,
-        type:"profile"
-    },
-      {
-        image:"https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960856/setting-5-svgrepo-com_1_vp1i4v.svg",
-        Text:"Setting",
-       resposivehidden:false,
-       type:"setting"
-    },
-    {
-        image:"https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960857/logout_3889524_1_pgs1je.png",
-        Text:"logout",
-       resposivehidden:false,
-       type:"logout"
-    }
+  // --- Effects ---
+  useEffect(() => {
+    setUnreadCount(unreadData);
+  }, [unreadData]);
 
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-  ]
+  // --- Socket.io Logic ---
+  useEffect(() => {
+    const handleMessageReceive = (data) => {
+      if (ActiveChatId !== data.senderId) {
+        dispatch(APi.util.invalidateTags([{ type: "unreadMessage", id: "unread" }, { type: "conversion", id: "coversionId" }]));
+      } else {
+        dispatch(APi.util.invalidateTags([{ type: "conversion", id: "coversionId" }]));
+        socket.emit('both_message_mark', { id: id, other_id: data.senderId });
+      }
+    };
+    socket.on('receive_message', handleMessageReceive);
+    return () => socket.off('receive_message', handleMessageReceive);
+  }, [ActiveChatId, id, dispatch]);
 
-  let ListAdd = [
-    {
-        image: "https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960855/undraw_children_e6ln_1_chhsdf.svg",
-        Text: "Register New Child",
-        type:'child'
-    },
-
-    {
-        image: "https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960854/undraw_hr-presentation_uunk_1_bfujwe.svg",
-        Text: "Employee account create",
-        type:'employee'
-    },
-
-   
-];
-  let ListSetting = [
-    {
-        image: "https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960856/security_13166299_1_y7mvpy.png",
-        Text: "Password Chage",
-        type:'passwordChange'
-    },
-
-    {
-        image: "https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960856/scanning_7065964_1_ihqn4u.png",
-        Text: "FQA",
-        type:'FQA'
-    },
-
-  
-];
-// useEffect(()=>{
-
-//    const handleMarkAsRead=(data)=>{
- 
-//   Dispatch(APi.util.invalidateTags([{type:"unreadMessage",id:"unread"}]))
-//   Dispatch(APi.util.invalidateTags([{type:"conversion",id:"coversionId"}]));
-
-//    setcountUnreadMessage(0);
-
-//    }
-// socket.on('succfuly_mark_as_read',handleMarkAsRead)
-
-// return()=>{
-//   socket.off('succfuly_mark_as_read',handleMarkAsRead)
-// }
-// },[])
-  const NavListControl=(type)=>{
-        
-            if(type=="add"){
-          
-               SetIsDisplay((pre)=>!pre)
-             }
-            if(type=="setting"){
-              setIsDisplaySettingControl((pre)=>!pre);
-
-             }
-           if(type=="Dashbord"){
-    
-                 navigate("/DashbordPage");
-             }
-             if(type=="profile"){
-
-              navigate('/ProfilePage')
-             }
-             if(type=="logout"){
-              console.log("logout");
-              Dispatch(logout());
-             }
-             
-
-
-          }
-
-const AddListControl=(type)=>{
-  console.log("start of Add button");
-console.log(type);
-         if(type=="child"){
-                navigate('/ChildRegister')
-
-               
-              return
-
-            }
-
-        if(type=="task"){
-         
-            
-                navigate('/Createtask')
-
-  return
-            }
-        if(type=="employee"){
-          navigate('/EmployeerRgister')
-return
-
-            }
-
-
-
-}
-
-const  settingListControl=(type)=>{
-
-       if(type=="passwordChange"){
-        navigate('/PasswordChange');
-        return
-
-
-
-       }
-
-
-
-
-}
-
-
-useEffect(()=>{
-const handleMessageReceive=(data)=>{
-console.log("wagawan")
- if(ActiveChatId!==data.senderId){
-  console.log('un equal ');
-   
-   Dispatch(APi.util.invalidateTags([{type:"unreadMessage",id:"unread"},{type:"conversion",id:"coversionId"}]))
-
-  }else{
-    console.log('man brother');
- 
-   Dispatch(APi.util.invalidateTags([{type:"conversion",id:"coversionId"}]))
-   socket.emit('both_message_mark',{id:id,other_id:data.senderId})
-
-  }
-}
-  socket.on('receive_message', handleMessageReceive)
-    
-  
-  
- return()=>{
-  socket.off('receive_message',handleMessageReceive);
- }
-},[ActiveChatId,APi,Dispatch, socket, id])
-
+  // --- Handlers ---
+  const handleLogout = () => dispatch(logout());
 
   return (
-    <div className='flex  z-100  backdrop-blur-sm w-full fixed top-0 left-0 items-center px-5  bg-white/30 justify-between h-[90px]'>
-      <img src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960857/out_1_ligvau.png" alt=""   className='w-[102px] max-smallmobile:hidden h-[42px]'/>
-       <nav className='flex items-center  max-[300px]:gap-1  gap-10'>
-       
-        <div  className='relative '>
-              <img onClick={()=>{
-          setSearchControl((pre)=>!pre);
-      }} src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960857/magnifying-glass-solid-full_1_un9ob1.svg" alt="" className='w-8 cursor-pointer h-8' />
-            { searchControl &&( <div className='absolute   search:w-100  top-10 md:-left-10'>
-              <input type="search" value={searchValue}  onChange={(e)=>{
-                 setSearchValue(e.target.value);
-              }}   placeholder='Search...' className='pl-4 max-search:w-60   border-none outline-1 outline-blue-600   search:w-100  rounded-md   h-10 bg-white border-1' />
-              {childResult?.length>0 && (
-                <div className='flex  bg-white max-search:w-60  rounded-b-md px-4 py-4 h-70 overflow-y-auto flex-col gap-4'>
-                  {
-                 childResult.map((child)=>(
+    <nav className={`fixed top-0 inset-x-0 h-20 z-[100] transition-all duration-300 px-4 sm:px-8 flex items-center justify-between
+      ${isScrolled ? 'bg-white/80 backdrop-blur-xl border-b border-slate-200/50 shadow-sm' : 'bg-white/30 backdrop-blur-sm'}`}>
+      
+      {/* Branding */}
+      <Link to="/DashbordPage" className="flex items-center gap-3 group">
+        <div className="w-11 h-11 bg-gradient-to-tr from-blue-600 to-indigo-500 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-200 group-hover:rotate-6 transition-transform">
+          <span className="text-white font-black text-xl italic">C</span>
+        </div>
+        <div className="flex flex-col max-md:hidden">
+          <span className="font-black text-lg leading-none tracking-tight text-slate-900">CENTRAL</span>
+          <span className="text-[10px] font-bold text-blue-600 uppercase tracking-widest leading-none mt-1">Workspace</span>
+        </div>
+      </Link>
 
+      {/* Modern Search Engine Interface */}
+      <div className="relative flex-1 max-w-md mx-6 max-sm:hidden">
+        <div className="relative group">
+          <FontAwesomeIcon icon={faSearch} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors" />
+          <input 
+            type="text" 
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            placeholder="Search child records..." 
+            className="w-full bg-slate-100/50 border border-transparent focus:bg-white focus:border-blue-200 focus:ring-4 focus:ring-blue-50 py-2.5 pl-11 pr-10 rounded-2xl outline-none transition-all text-sm font-medium"
+          />
+          {searchValue && (
+            <button onClick={() => setSearchValue('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-500">
+              <FontAwesomeIcon icon={faTimes} />
+            </button>
+          )}
+        </div>
 
-                    <Link to={`/ChildSingle/${child._id}`} key={child._id} className='flex  trantion duration-300 easy-out hover:bg-[#D6E2ED] rounded-md px-2 py-2 cursor-pointer items-center justify-between'>
-                    <div className='flex gap-3 items-center'>
-                      <img src={child.Childfile[0].mediaurl} alt="" className='w-15 rounded-full h-15' />
-                      <p>{child.childFirstName} {child.childLastName}</p>
+        {/* Search Results Dropdown */}
+        {searchValue.length >= 2 && (
+          <div className="absolute top-14 left-0 right-0 bg-white/95 backdrop-blur-xl border border-slate-100 rounded-[24px] shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-2">
+            {isSearching ? (
+              <div className="p-4 text-center text-xs font-bold text-slate-400 animate-pulse uppercase">Searching...</div>
+            ) : childResults?.length > 0 ? (
+              <div className="max-h-80 overflow-y-auto">
+                {childResults.map(child => (
+                  <Link key={child._id} to={`/ChildSingle/${child._id}`} onClick={() => setSearchValue('')} className="flex items-center gap-4 p-3 hover:bg-blue-50 rounded-xl transition-all group">
+                    <img src={child.Childfile?.[0]?.mediaurl} className="w-10 h-10 rounded-lg object-cover ring-2 ring-white shadow-sm" alt="" />
+                    <div className="flex-1">
+                      <p className="font-bold text-slate-800 text-sm">{child.childFirstName} {child.childLastName}</p>
+                      <p className="text-[10px] font-bold text-slate-400 uppercase">Grade {child.Grade}</p>
                     </div>
-                    <div className='flex items-center flex-col'>
-                      <p className='font-semibold'>Grade</p>
-                    <p className='font-light'>{child.Grade}</p>
-                    </div>
-
-                    </Link >
-                 )
-
-
-                 )
-                }
-
-
-              </div>)}
+                  </Link>
+                ))}
               </div>
-              )}
+            ) : (
+              <div className="p-4 text-center text-sm text-slate-400 font-medium">No results found</div>
+            )}
           </div>
-          <Link className='max-md:hidden cursor-pointer' to={'/DashbordPage'}>
-        
-            
-             <img src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960858/house-regular-full_1_xp07ke.svg" className='w-8 h-8'  alt="" />
-         </Link>
-
-         <Link to={"/MessagePage"}   className=' relative cursor-pointer'>
-        
-           
-            <img src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960857/message-regular-full_1_h1krql.svg" alt="" className='w-8 h-8' />
-             <span className="absolute -top-2 -right-1  text-xs font-bold bg-red-600 text-white rounded-full px-1">{countUnreadMessage>0?countUnreadMessage:""}</span>
-        </Link>
-
-        {/* <Link to={"/Notification"} className='cursor-pointer'>
-        <img src="bell-regular-full.svg" alt="" className='w-8 h-8' />
-          
-       </Link> */}
-        <div className='relative max-md:hidden '>
-     
-           <img src="https://res.cloudinary.com/dkzvlqjp9/image/upload/v1767960856/square-plus-regular-full_1_wkimns.svg" className='max-md:hidden w-8 h-8 cursor-pointer' onClick={()=>{
-        SetIsDisplay((pre)=>!pre);
-           }}   alt="" />
-          
-          <div className={` ${isDisplayADd ? "absolute -left-20 rounded-md top-12 px-3 py-5 w-68 bg-white flex flex-col gap-2":"hidden"}`}>
-           {
-            ListAdd.map((ListAdd)=>(
-
-           
-           
-            <div key={ListAdd.type} onClick={()=>{
-              AddListControl(ListAdd.type)
-            }} className={ `${User?.role!=='Admin'? ListAdd.type=="employee" ?"hidden":"flex"  :"flex"   }  px-1 py-3 gap-2 cursor-pointer hover:bg-[#D6E2ED] rounded-lg items-center`}>
-                <img src={ListAdd.image} className='w-8 h-8' alt="" />
-                <p>{ListAdd.Text}</p>
-
-            </div>
-             ))
-           }
-
-            
-
-          </div>
-            
-           </div>
-           
-       
-          
-
-      </nav>
-      <div className='flex gap-2 relative items-center cursor-pointer'
-        >
-          <img src={User?.profile.mediaurl ||  User?.profile} alt=""  className=' w-[50px] h-[50px] rounded-[50%]' />
-          <p className='font-bold max-smallmobile:hidden'>{User?`${User.firstName} ${User.lastName}`:"user"}</p>
-          <FontAwesomeIcon icon={faChevronDown} 
-             onClick={(e)=>{
-              e.preventDefault()
-            setIsDisplayNavList((pre)=>!pre);
-         }} className='text-[20px]'></FontAwesomeIcon>
-           <div   className={`${isDisplayNavList ?"absolute max-smallmobile:-left-15 rounded-md smallmobile:left-10 py-3 top-13 bg-white w-40 gap-5 px-1  flex flex-col":"hidden"} `}>
-               {NavList.map((list)=>(
-               <div key={list.type} 
-                  onClick={(e)=>{
-                    e.preventDefault();
-                   NavListControl(list.type)
-
-                     }}
-                 className={`flex md:${list.resposivehidden && ("hidden")} ${list.type=="add" &&("relative")} items-center  rounded-md trantion duration-300 easy-out hover:bg-[#D6E2ED] w-full gap-1  py-2`}> 
-                <img src={list.image} alt="" className='w-7 h-7' />
-                <p>{list.Text}</p>
-
-               {list.type=="add" &&(
-
-                 <div  onClick={(e)=>{
-                                    e.stopPropagation();
-                         }} 
-                   className={` ${isDisplayADd?"absolute  smallmobile:-left-68 rounded-md max-smallmobile:-left-20 max-smallmobile:top-10 top-5 px-3 py-5 w-68 bg-white flex flex-col gap-2":"hidden"}`}>
-                      {
-                       ListAdd.map((AddList)=>(
-
-                        
-                         <div
-                         onClick={(e)=>{
-                                    e.stopPropagation();
-                                    e.preventDefault();
-                                     AddListControl(AddList.type);
-                                
-                         }}
-                          key={AddList.type} 
-                          className={`${User?.role!='Admin'? AddList.type=="employee" || AddList.type=="child"?"hidden":"flex"  :"flex"   }    px-1 py-3 gap-2 cursor-pointer hover:bg-[#D6E2ED] rounded-lg items-center`}>
-                         <img src={AddList.image} className='w-8 h-8' alt="" />
-                         <p>{AddList.Text}</p>
-
-                         </div>
-                        
-                           ))
-                            }
-
-            
-
-                 </div>
-                  
-
-                   )}
-                  
-                   {list.type=='setting' && (
-
-                  <div  onClick={(e)=>{
-                                    e.stopPropagation();
-                         }} 
-                   className={` ${isDisplaySettingControl?"absolute  smallmobile:-left-68 rounded-md max-smallmobile:-left-20 max-smallmobile:top-60 top-25 px-3 py-5 w-68 bg-white flex flex-col gap-2":"hidden"}`}>
-                      {
-                       ListSetting.map((ListSt)=>(
-
-                        
-                         <div
-                         onClick={(e)=>{
-                                    e.stopPropagation();
-                                    e.preventDefault();
-                                     settingListControl(ListSt.type);
-                                
-                         }}
-                          key={ListSt.type} 
-                          className={`flex   px-1 py-3 gap-2 cursor-pointer hover:bg-[#D6E2ED] rounded-lg items-center`}>
-                         <img src={ListSt.image} className='w-8 h-8' alt="" />
-                         <p>{ListSt.Text}</p>
-
-                         </div>
-                        
-                           ))
-                            }
-
-            
-
-                 </div>
-
-
-                   )
-
-
-                   }
-                </div>
-
-                   ))}
-            </div>
-
-           
-
-               
+        )}
       </div>
 
+      {/* Action Icons */}
+      <div className="flex items-center gap-2 sm:gap-5">
+        <Link to="/DashbordPage" className="p-2 text-slate-400 hover:text-blue-600 transition-all max-sm:hidden">
+          <FontAwesomeIcon icon={faHouse} size="lg" />
+        </Link>
 
-    </div>
-  )
-}
+        <Link to="/MessagePage" className="relative p-2 text-slate-400 hover:text-blue-600 transition-all">
+          <FontAwesomeIcon icon={faMessage} size="lg" />
+          {unreadCount > 0 && (
+            <span className="absolute top-0 right-0 bg-rose-500 text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border-2 border-white animate-bounce">
+              {unreadCount}
+            </span>
+          )}
+        </Link>
 
-export default DashbordNav
+        {/* Global Add Menu */}
+        <div className="relative">
+          <button 
+            onClick={() => setShowAddMenu(!showAddMenu)}
+            className="w-10 h-10 bg-slate-900 text-white rounded-xl flex items-center justify-center hover:bg-blue-600 transition-all active:scale-90 shadow-lg shadow-slate-200"
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </button>
+          
+          {showAddMenu && (
+            <div className="absolute right-0 mt-4 w-64 bg-white border border-slate-100 rounded-[24px] shadow-2xl p-2 z-50">
+              <p className="text-[10px] font-black text-slate-400 uppercase p-3 tracking-widest">Registration</p>
+              <button onClick={() => { navigate('/ChildRegister'); setShowAddMenu(false); }} className="w-full flex items-center gap-3 p-3 hover:bg-blue-50 rounded-xl text-left transition-all group">
+                <div className="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all"><FontAwesomeIcon icon={faPlus} /></div>
+                <span className="font-bold text-sm text-slate-700">New Child</span>
+              </button>
+              {user?.role === 'Admin' && (
+                <button onClick={() => { navigate('/EmployeerRgister'); setShowAddMenu(false); }} className="w-full flex items-center gap-3 p-3 hover:bg-indigo-50 rounded-xl text-left transition-all group">
+                  <div className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-all"><FontAwesomeIcon icon={faPlus} /></div>
+                  <span className="font-bold text-sm text-slate-700">New Employee</span>
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className="h-8 w-[1px] bg-slate-200 mx-1 max-sm:hidden" />
+
+        {/* Profile Dropdown */}
+        <div className="relative">
+          <button 
+            onClick={() => setShowUserMenu(!showUserMenu)}
+            className="flex items-center gap-2 p-1 hover:bg-white rounded-2xl transition-all border border-transparent hover:border-slate-100 hover:shadow-sm"
+          >
+            <img src={user?.profile?.mediaurl || user?.profile} className="w-10 h-10 rounded-xl object-cover shadow-md" alt="" />
+            <FontAwesomeIcon icon={faChevronDown} className={`text-[10px] text-slate-400 transition-transform duration-300 ${showUserMenu ? 'rotate-180 text-blue-600' : ''}`} />
+          </button>
+
+          {showUserMenu && (
+            <div className="absolute right-0 mt-4 w-56 bg-white border border-slate-100 rounded-[24px] shadow-2xl p-2 z-50 overflow-hidden">
+              <div className="px-4 py-3 mb-2 bg-slate-50 rounded-2xl">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-tighter">Connected as</p>
+                <p className="text-sm font-black text-slate-800 truncate">{user?.firstName} {user?.lastName}</p>
+              </div>
+              
+              <Link to="/ProfilePage" onClick={() => setShowUserMenu(false)} className="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl font-bold text-sm text-slate-600 group">
+                <FontAwesomeIcon icon={faUserCircle} className="text-slate-400 group-hover:text-blue-600" /> Profile
+              </Link>
+              
+              <button onClick={() => setShowSettingMenu(!showSettingMenu)} className="w-full flex items-center justify-between p-3 hover:bg-slate-50 rounded-xl font-bold text-sm text-slate-600 group transition-all">
+                <div className="flex items-center gap-3">
+                    <FontAwesomeIcon icon={faGear} className="text-slate-400 group-hover:text-blue-600" /> Settings
+                </div>
+                <FontAwesomeIcon icon={faChevronDown} className={`text-[10px] transition-transform ${showSettingMenu ? 'rotate-180' : ''}`} />
+              </button>
+
+              {showSettingMenu && (
+                <div className="ml-4 mt-1 space-y-1 animate-in slide-in-from-left-2">
+                    <button onClick={() => navigate('/PasswordChange')} className="w-full text-left p-2 text-xs font-bold text-slate-500 hover:text-blue-600 transition-all underline decoration-blue-100 underline-offset-4">Change Password</button>
+                    <button className="w-full text-left p-2 text-xs font-bold text-slate-500 hover:text-blue-600 transition-all underline decoration-blue-100 underline-offset-4">FAQs & Support</button>
+                </div>
+              )}
+
+              <div className="my-2 border-t border-slate-50" />
+              
+              <button 
+                onClick={handleLogout}
+                className="w-full flex items-center gap-3 p-3 text-red-500 hover:bg-red-50 rounded-xl font-black text-sm transition-colors"
+              >
+                <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default DashbordNav;

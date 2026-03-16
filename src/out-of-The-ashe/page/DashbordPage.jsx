@@ -1,58 +1,56 @@
-import React, { useEffect } from 'react'
-import DashbordNav from '../Component/AuthenticateComponent/DashbordNav'
-import FooterComponent from '../Component/FooterComponent'
-import DashbordBody from '../Component/AuthenticateComponent/DashbordBody'
-import { useSelector,useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { useGetUserQuery } from '../Redux/User'
-import { useGetChildsQuery } from '../Redux/Childes'
-import { useGetEmployeesQuery } from '../Redux/Employee'
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import DashbordNav from '../Component/AuthenticateComponent/DashbordNav';
+import DashbordBody from '../Component/AuthenticateComponent/DashbordBody';
+import { FooterComponent } from '../Component/FooterComponent';
+import { useGetUserQuery } from '../Redux/User';
+import { useGetChildsQuery } from '../Redux/Childes';
+import { useGetEmployeesQuery } from '../Redux/Employee';
+
 const Spinner = () => (
-  <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+  <div className="flex flex-col items-center gap-4">
+    <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+    <p className="text-blue-600 font-bold animate-pulse">Loading Workspace...</p>
+  </div>
 );
+
 const DashbordPage = () => {
-  const {id,isAuthenticate}=useSelector((state)=>state.auth);
-  const navigate=useNavigate()
-    const {data:User,isLoading:UserDataLoading}=useGetUserQuery(id);
-  
-  const{data:childData,isLoading:ChildDataLoading}=useGetChildsQuery()
-  
-  const {data:EmployeeData,isLoading:EmployeeDataIsLoading}=useGetEmployeesQuery()
-  useEffect(()=>{
+  const { id, isAuthenticate } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
+  const { data: user, isLoading: userLoad } = useGetUserQuery(id);
+  const { data: childData, isLoading: childLoad } = useGetChildsQuery();
+  const { data: employees, isLoading: empLoad } = useGetEmployeesQuery();
 
-    if(!isAuthenticate){
- 
-      navigate('/loginpage');
+  useEffect(() => {
+    if (!isAuthenticate) navigate('/loginpage');
+    window.scrollTo(0, 0);
+  }, [isAuthenticate, navigate]);
 
-    }
-  },[isAuthenticate])
-  useEffect(()=>{
+  const isLoading = userLoad || childLoad || empLoad;
 
-    window.scrollTo(0,0)
-
-  },[])
-  const isloading=UserDataLoading || ChildDataLoading || EmployeeDataIsLoading
-
-if(isloading){
-
-
-      return (
-      <div className="flex items-center justify-center h-screen">
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-[#F8FAFC]">
         <Spinner />
       </div>
-    )}
+    );
+  }
+
   return (
-    <div className='w-full pt-25 gap-10 flex flex-col bg-[#D6E2ED]  min-h-screen'>
-      <DashbordNav></DashbordNav>
-
-     <DashbordBody></DashbordBody>
-
-     <FooterComponent></FooterComponent>
-
+    <div className="min-h-screen bg-[#F8FAFC] flex flex-col font-sans">
+      <DashbordNav user={user} />
+      <main className="flex-grow pt-24 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <DashbordBody 
+          user={user} 
+          childData={childData} 
+          employees={employees} 
+        />
+      </main>
+      <FooterComponent />
     </div>
-  )
-}
+  );
+};
 
-export default DashbordPage
-
+export default DashbordPage;

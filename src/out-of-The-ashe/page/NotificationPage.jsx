@@ -1,6 +1,6 @@
 import React from 'react'
 import DashbordNav from '../Component/AuthenticateComponent/DashbordNav'
-import FooterComponent from '../Component/FooterComponent'
+import { FooterComponent } from '../Component/FooterComponent'
 import Notification from '../Component/AuthenticateComponent/Notification'
 
 

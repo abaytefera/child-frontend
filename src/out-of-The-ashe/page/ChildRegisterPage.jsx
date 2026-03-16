@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import DashbordNav from '../Component/AuthenticateComponent/DashbordNav'
-import FooterComponent from '../Component/FooterComponent'
+import { FooterComponent } from '../Component/FooterComponent'
 import RegisterChild from '../Component/AuthenticateComponent/RegisterChild'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
