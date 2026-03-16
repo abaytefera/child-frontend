@@ -24,7 +24,7 @@ const ProfilePage = () => {
       <main className="flex-grow container mx-auto max-w-5xl pt-32 pb-20 px-4 md:px-8">
         <Profile />
       </main>
-      <FooterComponent />
+  
     </div>
   );
 };

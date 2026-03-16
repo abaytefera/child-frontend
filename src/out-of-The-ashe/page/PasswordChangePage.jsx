@@ -23,7 +23,7 @@ const PasswordChangePage = () => {
       <main className="flex-grow container mx-auto max-w-2xl pt-32 pb-20 px-4">
         <PasswordChange />
       </main>
-      <FooterComponent />
+  
     </div>
   );
 };

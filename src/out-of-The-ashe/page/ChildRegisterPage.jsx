@@ -28,7 +28,7 @@ const ChildRegisterPage = () => {
       <DashbordNav></DashbordNav>
 
      <RegisterChild ></RegisterChild>
-         <FooterComponent></FooterComponent>
+        
     </div>
   )
 }

@@ -23,7 +23,7 @@ const ChildSinglePage = () => {
       <main className="flex-grow pt-28 pb-20">
         <ChildSingle />
       </main>
-      <FooterComponent />
+   
     </div>
   );
 };

@@ -26,7 +26,7 @@ const EmployeeRegisterPage = () => {
       <main className="flex-grow flex items-center justify-center py-20 px-4">
         <EmployeeRegister />
       </main>
-      <FooterComponent />
+   
     </div>
   );
 };

@@ -11,7 +11,7 @@ const CreateTaskPage = () => {
       <main className="flex-grow pt-32 pb-20 px-4">
         <CreateTask />
       </main>
-      <FooterComponent />
+  
     </div>
   );
 }

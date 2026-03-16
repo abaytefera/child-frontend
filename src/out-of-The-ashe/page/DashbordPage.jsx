@@ -48,7 +48,7 @@ const DashbordPage = () => {
           employees={employees} 
         />
       </main>
-      <FooterComponent />
+    
     </div>
   );
 };

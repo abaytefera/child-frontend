@@ -12,7 +12,7 @@ const NotificationPage = () => {
 
      <Notification></Notification>
 
-     <FooterComponent></FooterComponent>
+    
 
     </div>
   )

@@ -87,7 +87,8 @@ const Message = () => {
         </div>
 
         <div className="flex-1 overflow-y-auto px-3 space-y-1">
-          {conversionCollection.map((item) => (
+          {[...conversionCollection].reverse()
+          .map((item) => (
             <div
               key={item._id}
               onClick={() => {

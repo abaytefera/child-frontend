@@ -23,7 +23,7 @@ const EmployeeSinglePage = () => {
       <main className="flex-grow pt-32 pb-20 px-4">
         <EmployeeProfile />
       </main>
-      <FooterComponent />
+  
     </div>
   );
 };
