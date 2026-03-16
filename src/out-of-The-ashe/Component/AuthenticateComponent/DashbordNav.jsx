@@ -78,7 +78,7 @@ const DashbordNav = () => {
       ${isScrolled ? 'bg-white/80 backdrop-blur-xl border-b border-slate-200/50 shadow-sm' : 'bg-white/30 backdrop-blur-sm'}`}>
       
       {/* Branding */}
-      <Link to="/DashbordPage" className="flex items-center gap-3 group">
+      <Link to="/DashboardPage" className="flex items-center gap-3 group">
         <div className="w-11 h-11 bg-gradient-to-tr from-blue-600 to-indigo-500 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-200 group-hover:rotate-6 transition-transform">
           <span className="text-white font-black text-xl italic">C</span>
         </div>
@@ -132,7 +132,7 @@ const DashbordNav = () => {
 
       {/* Action Icons */}
       <div className="flex items-center gap-2 sm:gap-5">
-        <Link to="/DashbordPage" className="p-2 text-slate-400 hover:text-blue-600 transition-all max-sm:hidden">
+        <Link to="/DashboardPage" className="p-2 text-slate-400 hover:text-blue-600 transition-all max-sm:hidden">
           <FontAwesomeIcon icon={faHouse} size="lg" />
         </Link>
 
