@@ -34,7 +34,7 @@ console.log(error)
     if (isAuthenticate && token) {
       localStorage.setItem('authToken', token);
       const timer = setTimeout(() => {
-        navigate('/DashbordPage');
+        navigate('/DashboardPage');
       }, 1500);
       return () => clearTimeout(timer);
     }
