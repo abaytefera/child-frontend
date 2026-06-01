@@ -22,7 +22,7 @@ export const FooterComponent = () => {
 
         <div className="text-right">
           <p className="text-sm">© {new Date().getFullYear()} All Rights Reserved</p>
-          <p className="text-sm text-slate-500 italic">Designed by Abay Tefera</p>
+       
         </div>
       </div>
     </footer>
